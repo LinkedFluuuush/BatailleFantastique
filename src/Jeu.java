@@ -1,6 +1,10 @@
 import java.util.LinkedList;
 
-
+/**
+ * Description de la classe
+ * @author llaluque jlouvet
+ * @version
+ */
 public class Jeu {
 
 	private Personnage persoAttaquant;
@@ -43,11 +47,20 @@ public class Jeu {
 		return joueurs;
 	}
 	/**
-	 * @param joueurs the joueurs to set
+	 * @param joueur joueur à ajouter
 	 */
-	public void setJoueurs(LinkedList<Joueur> joueurs) {
-		this.joueurs = joueurs;
+	public void addJoueur(Joueur joueur) {
+		this.joueurs.add(joueur);
 	}
 	
-	
+	/**
+	 * Indique le personnage choisi par la joueur et demande à l'ajouter à l'équipe du joueur
+	 * @param nomType nom du type du personnage choisi 
+	 * @param joueur indice du joueur dans la liste des joueurs
+	 * @param nom nom du personnage
+	 * @param age âge du personnage
+	 */
+	public void choixPersonnage(String nomType, int joueur, String nom, int age){
+		joueurs.get(joueur).addPerso(nomType, nom, age);
+	}
 }
