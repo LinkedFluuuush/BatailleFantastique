@@ -2,7 +2,11 @@ package Core;
 
 import java.util.LinkedList;
 
-
+/**
+ * Description de la classe
+ * @author llaluque jlouvet
+ * @version
+ */
 public class Joueur {
 
 	private String nom;
@@ -69,5 +73,22 @@ public class Joueur {
 			// TODO : créer classe étendant Exception
 			throw new Exception("Le type " + nomType + " n'existe pas !");
 		}
+	}
+	
+	/**
+	 * @param x abscisse de la case sélectionnée
+	 * @param y ordonnées de la case sélectionnée
+	 * @return perso personnage se situant à ces coordonnées, null si aucun personnage ne se trouve sur cette case
+	 */
+	public Personnage getPerso(int x, int y) {
+		Personnage res = null; // Pour stocker le résultat
+		for(int i = 0; i < personnages.size(); i++){
+			if(personnages.get(i).getPositionX() == x){
+				if(personnages.get(i).getPositionY() == y){
+					res = personnages.get(i);
+				}
+			}
+		}
+		return res; // Si aucun personnage correspondant n'a été trouvé, res vaut null
 	}
 }

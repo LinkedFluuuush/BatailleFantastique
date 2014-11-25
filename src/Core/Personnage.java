@@ -1,11 +1,15 @@
 package Core;
 
+import java.util.LinkedList;
+
 public abstract class Personnage {
 
 	private String nom;
 	private int age;
 	private int positionX;
 	private int positionY;
+	private LinkedList<Attaque> attaques;
+	private int deplacement;
 	
 	
 	/**
@@ -65,6 +69,20 @@ public abstract class Personnage {
 	 */
 	public void setPositionY(int positionY) {
 		this.positionY = positionY;
+	}
+
+	/**
+	 * @return the attaques
+	 */
+	public LinkedList<Attaque> getAttaques() {
+		return attaques;
+	}
+
+	/**
+	 * @return the deplacement
+	 */
+	public int getDeplacement() {
+		return deplacement;
 	}
 	
 }
