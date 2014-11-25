@@ -62,7 +62,8 @@ public class Jeu {
 	 * @param nom nom du personnage
 	 * @param age âge du personnage
 	 */
-	public void choixPersonnage(String nomType, int joueur, String nom, int age){
+	// TODO : changer l'exception par un nouveau type
+	public void choixPersonnage(String nomType, int joueur, String nom, int age) throws Exception {
 		joueurs.get(joueur).addPerso(nomType, nom, age);
 	}
 }
