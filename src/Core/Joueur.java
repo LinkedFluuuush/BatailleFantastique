@@ -9,11 +9,12 @@ public class Joueur {
 	private LinkedList<Personnage> personnages;
 	
 	/**
-	 * @param nom
+	 * @param nom Le nom du joueur
 	 */
 	public Joueur(String nom) {
 		super();
 		this.nom = nom;
+        this.personnages = new LinkedList<Personnage>();
 	}
 
 	/**
@@ -53,16 +54,16 @@ public class Joueur {
 	public void addPerso(String nomType, String nom, int age) throws Exception {
 		Personnage nouveauPerso;
 		// On fait des "if" car le switch case avec String n'est pas accepté
-		if(nomType == "Mage") {
+		if(nomType.equals("Mage")) {
 			nouveauPerso = new Mage(nom, age);
 			this.addPersonnage(nouveauPerso);
-		} else if(nomType == "CavalierCeleste") {
+		} else if(nomType.equals("CavalierCeleste")) {
 			nouveauPerso = new CavalierCeleste(nom, age);
 			this.addPersonnage(nouveauPerso);
-		} else if(nomType == "Voleur") {
+		} else if(nomType.equals("Voleur")) {
 			nouveauPerso = new Voleur(nom, age);
 			this.addPersonnage(nouveauPerso);
-		} else if(nomType == "Guerrier") {
+		} else if(nomType.equals("Guerrier")) {
 			nouveauPerso = new Guerrier(nom, age);
 			this.addPersonnage(nouveauPerso);
 		} else {
