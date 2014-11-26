@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 
 /**
  * Created by Jean-Baptiste Louvet on 25/11/14.
+ * Classe de test de la classe Core.Joueur
  */
 public class TestJoueur {
 
@@ -78,7 +79,8 @@ public class TestJoueur {
         assertTrue(j1.getPersonnages().get(0).getClass() == CavalierCeleste.class);
     }
 
-    @Test(expected = Exception.class) public void testAddPersoFaux() throws Exception {
+    @Test(expected = Exception.class)
+    public void testAddPersoException() throws Exception {
         Joueur j1 = new Joueur("toto");
 
         j1.addPerso("Haleflin dérangé", "TwentyThree", 18);
