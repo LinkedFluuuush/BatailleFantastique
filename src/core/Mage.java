@@ -1,12 +1,12 @@
-package Core;
+package core;
 
-public class Guerrier extends Personnage {
+public class Mage extends Personnage {
 
 	/**
 	 * @param nom
 	 * @param age
 	 */
-	public Guerrier(String nom, int age) {
+	public Mage(String nom, int age) {
 		super(nom, age);
 		// TODO Auto-generated constructor stub
 	}

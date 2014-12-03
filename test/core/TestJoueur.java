@@ -1,11 +1,12 @@
-package Core;
+package core;
 
+import exception.ClassePersonnageManquanteException;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
  * Created by Jean-Baptiste Louvet on 25/11/14.
- * Classe de test de la classe Core.Joueur
+ * Classe de test de la classe core.Joueur
  */
 public class TestJoueur {
 
@@ -28,59 +29,43 @@ public class TestJoueur {
     }
 
     @Test
-    public void testAddPersoMage() {
+    public void testAddPersoMage() throws ClassePersonnageManquanteException {
         Joueur j1 = new Joueur("toto");
 
-        try {
-            j1.addPerso("Mage", "Siegfried", 26);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        j1.addPerso("Mage", "Siegfried", 26);
 
         assertTrue(j1.getPersonnages().get(0).getClass() == Mage.class);
     }
 
     @Test
-    public void testAddPersoGuerrier() {
+    public void testAddPersoGuerrier() throws ClassePersonnageManquanteException {
         Joueur j1 = new Joueur("toto");
 
-        try {
-            j1.addPerso("Guerrier", "Durak", 26);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        j1.addPerso("Guerrier", "Durak", 26);
 
         assertTrue(j1.getPersonnages().get(0).getClass() == Guerrier.class);
     }
 
     @Test
-    public void testAddPersoVoleur() {
+    public void testAddPersoVoleur() throws ClassePersonnageManquanteException {
         Joueur j1 = new Joueur("toto");
 
-        try {
-            j1.addPerso("Voleur", "Faïeur", 26);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        j1.addPerso("Voleur", "Faïeur", 26);
 
         assertTrue(j1.getPersonnages().get(0).getClass() == Voleur.class);
     }
 
     @Test
-    public void testAddPersoCavalierCeleste() {
+    public void testAddPersoCavalierCeleste() throws ClassePersonnageManquanteException {
         Joueur j1 = new Joueur("toto");
 
-        try {
-            j1.addPerso("CavalierCeleste", "Lorandara", 26);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        j1.addPerso("CavalierCeleste", "Lorandara", 26);
 
         assertTrue(j1.getPersonnages().get(0).getClass() == CavalierCeleste.class);
     }
 
-    @Test(expected = Exception.class)
-    public void testAddPersoException() throws Exception {
+    @Test(expected = ClassePersonnageManquanteException.class)
+    public void testAddPersoException() throws ClassePersonnageManquanteException {
         Joueur j1 = new Joueur("toto");
 
         j1.addPerso("Haleflin dérangé", "TwentyThree", 18);
