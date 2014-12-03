@@ -10,6 +10,7 @@ public abstract class Personnage {
 	private int positionY;
 	private LinkedList<Attaque> attaques;
 	private int deplacement;
+	private int pv; // points de vie
 	
 	
 	/**
@@ -53,22 +54,10 @@ public abstract class Personnage {
 		return positionX;
 	}
 	/**
-	 * @param positionX the positionX to set
-	 */
-	public void setPositionX(int positionX) {
-		this.positionX = positionX;
-	}
-	/**
 	 * @return the positionY
 	 */
 	public int getPositionY() {
 		return positionY;
-	}
-	/**
-	 * @param positionY the positionY to set
-	 */
-	public void setPositionY(int positionY) {
-		this.positionY = positionY;
 	}
 
 	/**
@@ -85,4 +74,20 @@ public abstract class Personnage {
 		return deplacement;
 	}
 	
+	/** Modifie le nombre de points de vie du personnage
+	 * @param effet effet d'une attaque subie
+	 */
+	public void appliquerEffets(int effet){
+		pv = pv - effet;
+	}
+	
+	
+	/** Modifie la position du personnage
+	 * @param x nouvelle abscisse
+	 * @param y nouvelle ordonnée
+	 */
+	public void deplacerPerso(int x, int y){
+		positionX = x;
+		positionY = y;
+	}
 }
