@@ -184,11 +184,11 @@ public class Jeu {
 	 * @param deplacement déplacement du personnage
 	 */
 	public void deplacer(int x, int y, int deplacement) throws DeplacementException { // deplacement est récupéré dans choixCase
-		if(verifDeplacementValide(x, y, deplacement)){
+//		if(verifDeplacementValide(x, y, deplacement)){
 			persoAttaquant.deplacerPerso(x,y);
-		} else {
-			throw new DeplacementException();
-		}
+//		} else {
+//			throw new DeplacementException();
+//		}
 	}
 	
 //	/** Vérifie si le déplacement voulu est valide

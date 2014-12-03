@@ -9,10 +9,10 @@ public class Mage extends Personnage {
 	public Mage(String nom, int age) {
 		super(nom, age);
 		// TODO Auto-generated constructor stub
-		this.deplacement = 2;
+/*		this.deplacement = 2;
 		this.pv = 8;
 		// Attaques
-		this.attaques.add(new Attaque("Tempête", int portee, int zone, boolean ralentissement,int effet));
+		this.attaques.add(new Attaque("Tempête", int portee, int zone, boolean ralentissement,int effet));*/
 	}
 
 	/** Vérifie si le déplacement voulu est valide

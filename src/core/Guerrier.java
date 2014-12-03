@@ -11,4 +11,9 @@ public class Guerrier extends Personnage {
 		// TODO Auto-generated constructor stub
 	}
 
+    @Override
+    public boolean verifDeplacementValide(int x, int y, Jeu j) {
+        return false;
+    }
+
 }
