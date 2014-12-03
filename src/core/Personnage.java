@@ -10,8 +10,10 @@ public abstract class Personnage {
 	private int positionY;
 	protected LinkedList<Attaque> attaques;
 	protected int deplacement;
+	private int malusDeplacement;
 	protected int pv; // points de vie
-	
+	protected boolean terrestre; // vaut vrai si le personnage est terrestre
+	private int protection; // protection dont le personnage peut bénéficier grâce à l'instinct d'esquive, par exemple
 	
 	/**
 	 * @param nom
@@ -23,6 +25,8 @@ public abstract class Personnage {
 		this.age = age;
 		this.positionX = 0;
 		this.positionY = 0;
+		this.malusDeplacement = 0;
+		this.protection = 0;
 	}
 	
 	/**
@@ -79,8 +83,22 @@ public abstract class Personnage {
 	/** Modifie le nombre de points de vie du personnage
 	 * @param effet effet d'une attaque subie
 	 */
-	public void appliquerEffets(int effet){
-		pv = pv - effet;
+	public void appliquerEffets(Attaque attaque){
+		if(attaque.getNom() == "Instinct d'esquive") {
+			protection = 3;
+		}
+		if((attaque.isCeleste() && !this.terrestre) || (attaque.isTerrestre() && this.terrestre)){ // vérifie si le personnage est vulnérable ou non à l'attaque, selon qu'il est terrestre ou céleste
+			if(attaque.isRalentissement()){
+				this.malusDeplacement++;
+			} else {
+				if (attaque.getEffet() >= protection){
+					pv = pv - attaque.getEffet() + protection;
+				} else {
+					protection -= attaque.getEffet();
+					// Le nombre de PV ne change pas car la protection absorbe les dégâts faits par l'attaque
+				}
+			}
+		}
 	}
 	
 	

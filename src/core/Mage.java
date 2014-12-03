@@ -11,8 +11,14 @@ public class Mage extends Personnage {
 		// TODO Auto-generated constructor stub
 		this.deplacement = 2;
 		this.pv = 8;
+		this.terrestre = true;
 		// Attaques
-		this.attaques.add(new Attaque("Tempête", int portee, int zone, boolean ralentissement,int effet));
+		// TODO : définir l'infini (à la place de 1000)
+		this.attaques.add(new Attaque("Tempête", 1000, 9, false, 4, true, false));
+		this.attaques.add(new Attaque("Tremblement de terre", 1000, 9, false, 3, false, true));
+		this.attaques.add(new Attaque("Boule de feu", 4, 1, false, 4, true, true));
+		this.attaques.add(new Attaque("Enchevêtrement de ronces", 4, 1, true, 0, false, true));
+		this.attaques.add(new Attaque("Terre marécageuse", 1000, 9, true, 0, false, true));
 	}
 
 	/** Vérifie si le déplacement voulu est valide
