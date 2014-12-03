@@ -173,8 +173,7 @@ public class Jeu {
 	 */
 	public void attaquerCible(Attaque attaque, Personnage persoCible) {
 		int effet; // effets de l'attaque
-		effet = attaque.getEffet();
-		persoCible.appliquerEffets(effet);
+        persoCible.appliquerEffets(attaque);
 		
 	}
 	
@@ -184,11 +183,11 @@ public class Jeu {
 	 * @param deplacement déplacement du personnage
 	 */
 	public void deplacer(int x, int y, int deplacement) throws DeplacementException { // deplacement est récupéré dans choixCase
-//		if(verifDeplacementValide(x, y, deplacement)){
+        if(persoAttaquant.verifDeplacementValide(x, y, this)){
 			persoAttaquant.deplacerPerso(x,y);
-//		} else {
-//			throw new DeplacementException();
-//		}
+		} else {
+			throw new DeplacementException();
+		}
 	}
 	
 //	/** Vérifie si le déplacement voulu est valide

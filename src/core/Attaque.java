@@ -4,9 +4,56 @@ public class Attaque {
 	
 	private String nom; // nom de l'attaque
 	private int portee; // portée de l'attaque
+	/**
+	 * @return the celeste
+	 */
+	public boolean isCeleste() {
+		return celeste;
+	}
+	/**
+	 * @param celeste the celeste to set
+	 */
+	public void setCeleste(boolean celeste) {
+		this.celeste = celeste;
+	}
+	/**
+	 * @return the terrestre
+	 */
+	public boolean isTerrestre() {
+		return terrestre;
+	}
+	/**
+	 * @param terrestre the terrestre to set
+	 */
+	public void setTerrestre(boolean terrestre) {
+		this.terrestre = terrestre;
+	}
 	private int zone; // zone de l'attaque en cas d'attaque sur une zone
 	private boolean ralentissement; // vaut vrai si l'attaque est un ralentissement
 	private int effet; // nombre de points de vie perdus par la cible
+	private boolean celeste; // vaut vrai si l'attaque est céleste
+	private boolean terrestre; // vaut vrai si l'attaque est terrestre
+
+	/**
+	 * @param nom
+	 * @param portee
+	 * @param zone
+	 * @param ralentissement
+	 * @param effet
+	 * @param celeste
+	 * @param terrestre
+	 */
+	public Attaque(String nom, int portee, int zone, boolean ralentissement,
+			int effet, boolean celeste, boolean terrestre) {
+		super();
+		this.nom = nom;
+		this.portee = portee;
+		this.zone = zone;
+		this.ralentissement = ralentissement;
+		this.effet = effet;
+		this.celeste = celeste;
+		this.terrestre = terrestre;
+	}
 	/**
 	 * @return the effet
 	 */
