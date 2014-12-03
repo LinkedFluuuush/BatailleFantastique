@@ -1,4 +1,6 @@
-package Core;
+package core;
+
+import exception.ClassePersonnageManquanteException;
 
 import java.util.LinkedList;
 
@@ -69,8 +71,7 @@ public class Jeu {
 	 * @param nom nom du personnage
 	 * @param age âge du personnage
 	 */
-	// TODO : changer l'exception par un nouveau type
-	public void choixPersonnage(String nomType, int joueur, String nom, int age) throws Exception {
+	public void choixPersonnage(String nomType, int joueur, String nom, int age) throws ClassePersonnageManquanteException {
 		joueurs.get(joueur).addPerso(nomType, nom, age);
 	}
 	

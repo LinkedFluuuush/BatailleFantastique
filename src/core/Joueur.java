@@ -1,4 +1,6 @@
-package Core;
+package core;
+
+import exception.ClassePersonnageManquanteException;
 
 import java.util.LinkedList;
 
@@ -13,11 +15,12 @@ public class Joueur {
 	private LinkedList<Personnage> personnages;
 	
 	/**
-	 * @param nom
+	 * @param nom Le nom du joueur
 	 */
 	public Joueur(String nom) {
 		super();
 		this.nom = nom;
+        this.personnages = new LinkedList<Personnage>();
 	}
 
 	/**
@@ -54,24 +57,23 @@ public class Joueur {
 	 * @param nom nom du personnage
 	 * @param age âge du personnage
 	 */
-	public void addPerso(String nomType, String nom, int age) throws Exception {
+	public void addPerso(String nomType, String nom, int age) throws ClassePersonnageManquanteException {
 		Personnage nouveauPerso;
 		// On fait des "if" car le switch case avec String n'est pas accepté
-		if(nomType == "Mage") {
+		if(nomType.equals("Mage")) {
 			nouveauPerso = new Mage(nom, age);
 			this.addPersonnage(nouveauPerso);
-		} else if(nomType == "CavalierCeleste") {
+		} else if(nomType.equals("CavalierCeleste")) {
 			nouveauPerso = new CavalierCeleste(nom, age);
 			this.addPersonnage(nouveauPerso);
-		} else if(nomType == "Voleur") {
+		} else if(nomType.equals("Voleur")) {
 			nouveauPerso = new Voleur(nom, age);
 			this.addPersonnage(nouveauPerso);
-		} else if(nomType == "Guerrier") {
+		} else if(nomType.equals("Guerrier")) {
 			nouveauPerso = new Guerrier(nom, age);
 			this.addPersonnage(nouveauPerso);
 		} else {
-			// TODO : créer classe étendant Exception
-			throw new Exception("Le type " + nomType + " n'existe pas !");
+			throw new ClassePersonnageManquanteException("Le type " + nomType + " n'existe pas !");
 		}
 	}
 	
