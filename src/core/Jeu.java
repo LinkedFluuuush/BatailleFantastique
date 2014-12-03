@@ -191,20 +191,20 @@ public class Jeu {
 		}
 	}
 	
-	/** Vérifie si le déplacement voulu est valide
-	 * @param x abscisse de la case cible
-	 * @param y ordonnée de la case cible
-	 * @param deplacement déplacement du personnage
-	 * @return validité du déplacement
-	 */
-	public boolean verifDeplacementValide(int x, int y, int deplacement){
-		int nbCasesParcourues = 0; // nombre de cases nécessaires à parcourir pour arriver à la case cible
-		int deltaX = Math.abs(x - persoAttaquant.getPositionX()); // x - persoAttaquant.getPositionX() représente l'écart en abscisse de la position courante à la cible
-		int deltaY = Math.abs(y - persoAttaquant.getPositionY()); // y - persoAttaquant.getPositionY() représente l'écart en ordonnée de la position courante à la cible
-		nbCasesParcourues += deltaX;
-		nbCasesParcourues += deltaY;
-		return((nbCasesParcourues > deplacement) || getPerso(x,y) == null);
-	}
+//	/** Vérifie si le déplacement voulu est valide
+//	 * @param x abscisse de la case cible
+//	 * @param y ordonnée de la case cible
+//	 * @param deplacement déplacement du personnage
+//	 * @return validité du déplacement
+//	 */
+//	public boolean verifDeplacementValide(int x, int y, int deplacement){
+//		int nbCasesParcourues = 0; // nombre de cases nécessaires à parcourir pour arriver à la case cible
+//		int deltaX = Math.abs(x - persoAttaquant.getPositionX()); // x - persoAttaquant.getPositionX() représente l'écart en abscisse de la position courante à la cible
+//		int deltaY = Math.abs(y - persoAttaquant.getPositionY()); // y - persoAttaquant.getPositionY() représente l'écart en ordonnée de la position courante à la cible
+//		nbCasesParcourues += deltaX;
+//		nbCasesParcourues += deltaY;
+//		return((nbCasesParcourues > deplacement) || getPerso(x,y) == null);
+//	}
 	
 	
 }

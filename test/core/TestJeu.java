@@ -2,6 +2,8 @@ package core;
 
 import exception.ClassePersonnageManquanteException;
 import org.junit.Test;
+
+import core.*;
 import static org.junit.Assert.*;
 
 /**

@@ -8,9 +8,9 @@ public abstract class Personnage {
 	private int age;
 	private int positionX;
 	private int positionY;
-	private LinkedList<Attaque> attaques;
-	private int deplacement;
-	private int pv; // points de vie
+	protected LinkedList<Attaque> attaques;
+	protected int deplacement;
+	protected int pv; // points de vie
 	
 	
 	/**
@@ -21,6 +21,8 @@ public abstract class Personnage {
 		super();
 		this.nom = nom;
 		this.age = age;
+		this.positionX = 0;
+		this.positionY = 0;
 	}
 	
 	/**
@@ -90,4 +92,11 @@ public abstract class Personnage {
 		positionX = x;
 		positionY = y;
 	}
+	
+	/** Vérifie si le déplacement voulu est valide
+	 * @param x abscisse de la case cible
+	 * @param y ordonnée de la case cible
+	 * @return validité du déplacement
+	 */
+	abstract public boolean verifDeplacementValide(int x, int y, Jeu j);
 }
