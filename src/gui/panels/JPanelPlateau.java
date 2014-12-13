@@ -21,7 +21,7 @@ public class JPanelPlateau extends JPanel {
     }
 
     public void paint(Graphics g){
-        Jeu jeu = ((MainFrame) this.getParent().getParent().getParent().getParent().getParent()).getJeu();
+        Jeu jeu = ((MainFrame)this.getTopLevelAncestor()).getJeu();
         int tailleH = 700 / jeu.getnColonnes();
         int tailleV = 550 / jeu.getnLignes();
         boolean color = true;

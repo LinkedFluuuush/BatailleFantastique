@@ -49,7 +49,7 @@ public class MainFrame extends JFrame {
         panelStat = new JPanelStat();
         panelPlateau = new JPanelPlateau();
 
-        updateFromState(this.getJeu());
+        updateFromState();
 
         mainPanel.add(panelStat);
         mainPanel.add(panelPlateau);
@@ -58,14 +58,17 @@ public class MainFrame extends JFrame {
         this.pack();
     }
 
-    private void updateFromState(Jeu jeu){
-        switch (jeu.getEtatCourant()){
+    public void updateFromState(){
+        switch (this.jeu.getEtatCourant()){
             case SELECTION:
-                panelStat.interfaceSelection();
+                panelStat.removeAll();
+                panelStat.interfaceSelection(this.getJeu());
                 break;
             case PLACEMENT:
+                panelStat.removeAll();
                 break;
             case ENCOURS:
+                panelStat.removeAll();
                 break;
         }
     }

@@ -1,9 +1,15 @@
 package gui.panels;
 
+import core.Jeu;
+import core.Joueur;
+import core.Personnage;
+import gui.MainFrame;
 import gui.actionListeners.AddPersonnageActionListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Iterator;
+import java.util.LinkedList;
 
 /**
  * User: Linked
@@ -17,12 +23,14 @@ public class JPanelStat extends JPanel {
     private JTextField agePersonnageTextField;
     private JButton ajouterPersonnageButton;
     private JLabel labelError;
+    private JPanel resumePersos;
+    private JPanel panelSelection;
 
     public JPanelStat(){
         this.setPreferredSize(new Dimension(300, 550));
     }
 
-    public void interfaceSelection() {
+    public void interfaceSelection(Jeu jeu) {
 
         typesPersoComboBox = new JComboBox<String>();
         typesPersoComboBox.addItem("Mage");
@@ -35,9 +43,11 @@ public class JPanelStat extends JPanel {
         ajouterPersonnageButton = new JButton("Ajouter le personnage");
         labelError = new JLabel();
 
-        ajouterPersonnageButton.addActionListener(new AddPersonnageActionListener(this));
+        ajouterPersonnageButton.addActionListener(new AddPersonnageActionListener(this, jeu));
 
-        JPanel panelSelection = new JPanel();
+        panelSelection = new JPanel();
+        resumePersos = new JPanel();
+        resumePersos.setLayout(new BoxLayout(resumePersos, BoxLayout.PAGE_AXIS));
 
         panelSelection.setLayout(new BoxLayout(panelSelection, BoxLayout.PAGE_AXIS));
 
@@ -48,10 +58,32 @@ public class JPanelStat extends JPanel {
         panelSelection.add(agePersonnageTextField);
         panelSelection.add(ajouterPersonnageButton);
 
-        panelSelection.setBorder(BorderFactory.createTitledBorder("Sélection d'équipe"));
+        panelSelection.setBorder(BorderFactory.createTitledBorder("Sélection d'équipe - " + jeu.getJoueurCourant().getNom()));
 
         this.add(panelSelection);
         this.add(labelError);
+        this.add(resumePersos);
+    }
+
+    public void majResumePersos(Joueur j){
+        LinkedList<Personnage> persos = j.getPersonnages();
+        Iterator<Personnage> persosIt = persos.iterator();
+        Personnage p;
+        JPanel unPerso;
+
+        resumePersos.removeAll();
+
+        while(persosIt.hasNext()){
+            p = persosIt.next();
+            unPerso = new JPanel();
+            unPerso.setLayout(new BoxLayout(unPerso, BoxLayout.PAGE_AXIS));
+            unPerso.add(new JLabel(p.getClass().toString()));
+            unPerso.add(new JLabel(p.getNom()));
+            unPerso.add(new JLabel(p.getAge() + " ans"));
+            unPerso.setBorder(BorderFactory.createEtchedBorder());
+
+            resumePersos.add(unPerso);
+        }
     }
 
     public JComboBox<String> getTypesPersoComboBox() {
@@ -88,5 +120,9 @@ public class JPanelStat extends JPanel {
 
     public JLabel getLabelError() {
         return labelError;
+    }
+
+    public JPanel getPanelSelection() {
+        return panelSelection;
     }
 }

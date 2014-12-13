@@ -16,9 +16,11 @@ import java.awt.event.ActionListener;
  */
 public class AddPersonnageActionListener implements ActionListener {
     private JPanelStat panelStat;
+    private Jeu jeu;
 
-    public AddPersonnageActionListener(JPanelStat panelStat){
+    public AddPersonnageActionListener(JPanelStat panelStat, Jeu jeu){
         this.panelStat = panelStat;
+        this.jeu = jeu;
     }
 
     @Override
@@ -34,12 +36,28 @@ public class AddPersonnageActionListener implements ActionListener {
                 int agePerso = Integer.parseInt(panelStat.getAgePersonnageTextField().getText());
 
                 try {
-                    Jeu jeu = ((MainFrame) panelStat.getParent().getParent().getParent().getParent().getParent()).getJeu();
                     jeu.getJoueurCourant().addPerso(typePerso, nomPerso, agePerso);
                     panelStat.getTypesPersoComboBox().setSelectedIndex(0);
                     panelStat.getNomPersonnageTextField().setText("");
                     panelStat.getAgePersonnageTextField().setText("");
                     System.out.println("Added : " + typePerso + " : " + nomPerso + ", " + agePerso + "ans.");
+
+                    if(jeu.getJoueurCourant().getPersonnages().size() == jeu.getnPersonnages()){
+                        for(int i = 0; i < jeu.getJoueurs().size(); i++){
+                            if(jeu.getJoueurs().get(i) == jeu.getJoueurCourant()){
+                                jeu.setJoueurCourant(jeu.getJoueurs().get((i+1) % jeu.getJoueurs().size()));
+                                if(jeu.getJoueurCourant().getPersonnages().size() == 0){
+                                    panelStat.getPanelSelection().setBorder(BorderFactory.createTitledBorder("Sélection d'équipe - " + jeu.getJoueurCourant().getNom()));
+                                } else {
+                                    jeu.setEtatCourant(Jeu.Etat.ENCOURS);
+                                    ((MainFrame) panelStat.getTopLevelAncestor()).updateFromState();
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    panelStat.majResumePersos(jeu.getJoueurCourant());
                 } catch (ClassePersonnageManquanteException e1) {
                     e1.printStackTrace();
                 }
