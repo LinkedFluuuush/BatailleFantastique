@@ -11,7 +11,7 @@ public abstract class Personnage {
 	protected LinkedList<Attaque> attaques;
 	protected int deplacement;
 	private int malusDeplacement;
-	protected int pv; // points de vie
+    protected int pv; // points de vie
 	protected boolean terrestre; // vaut vrai si le personnage est terrestre
 	private int protection; // protection dont le personnage peut bénéficier grâce à l'instinct d'esquive, par exemple
 	
@@ -80,7 +80,15 @@ public abstract class Personnage {
 	public int getDeplacement() {
 		return deplacement;
 	}
-	
+
+    public int getPv() {
+            return pv;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
 	/** Modifie le nombre de points de vie du personnage
 	 * @param attaque effet d'une attaque subie
 	 */

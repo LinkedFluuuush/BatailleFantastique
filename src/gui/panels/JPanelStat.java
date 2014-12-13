@@ -1,8 +1,6 @@
 package gui.panels;
 
-import core.Jeu;
-import core.Joueur;
-import core.Personnage;
+import core.*;
 import gui.MainFrame;
 import gui.actionListeners.AddPersonnageActionListener;
 
@@ -18,6 +16,7 @@ import java.util.LinkedList;
  */
 public class JPanelStat extends JPanel {
 
+    //Composants pour l'interface de sélection d'équipe
     private JComboBox<String> typesPersoComboBox;
     private JTextField nomPersonnageTextField;
     private JTextField agePersonnageTextField;
@@ -25,6 +24,16 @@ public class JPanelStat extends JPanel {
     private JLabel labelError;
     private JPanel resumePersos;
     private JPanel panelSelection;
+
+    //Composants pour l'interface de jeu
+    private JLabel labelClasse;
+    private JLabel labelNom;
+    private JLabel labelAge;
+    private JLabel labelStatut;
+    private JLabel labelPV;
+    private JLabel labelDeplacement;
+
+
 
     public JPanelStat(){
         this.setPreferredSize(new Dimension(300, 550));
@@ -86,6 +95,49 @@ public class JPanelStat extends JPanel {
         }
     }
 
+    public void interfaceJeu(Jeu jeu){
+        JPanel panelResumePerso = new JPanel();
+        panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
+
+        labelClasse = new JLabel();
+        labelNom = new JLabel();
+        labelAge = new JLabel();
+        labelStatut = new JLabel();
+        labelPV = new JLabel();
+        labelDeplacement = new JLabel();
+
+        panelResumePerso.add(labelClasse);
+        panelResumePerso.add(labelNom);
+        panelResumePerso.add(labelAge);
+        panelResumePerso.add(labelStatut);
+        panelResumePerso.add(labelDeplacement);
+        panelResumePerso.add(labelPV);
+
+        panelResumePerso.setBorder(BorderFactory.createTitledBorder(""));
+
+        this.add(panelResumePerso);
+    }
+
+    public void updateStats(Personnage perso) {
+        if(perso.getClass() == Mage.class){
+            labelClasse.setText("Mage");
+        } else if(perso.getClass() == Voleur.class){
+            labelClasse.setText("Voleur");
+        } else if(perso.getClass() == Guerrier.class){
+            labelClasse.setText("Guerrier");
+        } else if(perso.getClass() == CavalierCeleste.class){
+            labelClasse.setText("Cavalier Céleste");
+        }
+
+        labelNom.setText(perso.getNom());
+        labelAge.setText(perso.getAge() + " ans");
+        labelStatut.setText("Statut : En vie");
+        labelDeplacement.setText("Déplacement : " + perso.getDeplacement() + " cases par tour");
+        labelPV.setText("Vie : " + perso.getPv() + " PV");
+
+        this.updateUI();
+    }
+
     public JComboBox<String> getTypesPersoComboBox() {
         return typesPersoComboBox;
     }
@@ -125,4 +177,5 @@ public class JPanelStat extends JPanel {
     public JPanel getPanelSelection() {
         return panelSelection;
     }
+
 }

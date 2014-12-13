@@ -57,9 +57,9 @@ public class NouveauJeuActionListener implements ActionListener {
                 j.addJoueur(new Joueur(textNameJ2.getText()));
 
                 j.setJoueurCourant(j.getJoueurs().get(r.nextInt(1)));
-                j.setnPersonnages(1);
-                j.setnColonnes(50);
-                j.setnLignes(20);
+                j.setnPersonnages(5);
+                j.setnColonnes(10);
+                j.setnLignes(10);
 
                 ((MainFrame) theBar.getTopLevelAncestor()).setJeu(j);
                 theBar.setNouveauJeuClicable(false);

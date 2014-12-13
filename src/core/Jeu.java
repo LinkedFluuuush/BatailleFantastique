@@ -13,7 +13,6 @@ import exception.DeplacementException;
  * @version 1.5
  */
 public class Jeu {
-
 	private Personnage persoAttaquant;
 	private LinkedList<Joueur> joueurs;
     private Joueur joueurCourant;

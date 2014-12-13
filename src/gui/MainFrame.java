@@ -69,8 +69,26 @@ public class MainFrame extends JFrame {
                 break;
             case ENCOURS:
                 panelStat.removeAll();
+
+                //Placement des personnages, à retirer sur l'itération 3
+                for(int i = 0; i < jeu.getJoueurs().size() ; i++){
+                    for(int j = 0; j < jeu.getJoueurs().get(i).getPersonnages().size() ; j++){
+                        jeu.getJoueurs().get(i).getPersonnages().get(j).deplacerPerso(i,j);
+                    }
+                }
+
+                panelPlateau.repaint();
+                panelStat.interfaceJeu(this.getJeu());
                 break;
         }
+    }
+
+    public JPanelPlateau getPanelPlateau() {
+        return panelPlateau;
+    }
+
+    public JPanelStat getPanelStat() {
+        return panelStat;
     }
 
     /**
