@@ -19,14 +19,31 @@ public class Jeu {
     private Joueur joueurCourant;
 //	private Attaque attaqueCourante;
 
+    /**
+     * Définit l'état du jeu. Permet à l'interface de savoir ou en est la partie
+     * SELECTION : Sélection des personnages en cours
+     * PLACEMENT : Placement des personnages sur la carte en cours
+     * ENCOURS : Partie en déroulement normal
+     */
     public enum Etat {
         SELECTION, ENCOURS, PLACEMENT;
     }
 
     private Etat etatCourant;
 
+    /**
+     * Définit le nombre de personnages par équipe
+     */
     private int nPersonnages;
+
+    /**
+     * Définit le nombre de colonne de la carte
+     */
     private int nColonnes;
+
+    /**
+     * Définit le nombre de lignes de la carte
+     */
     private int nLignes;
 
     /**
