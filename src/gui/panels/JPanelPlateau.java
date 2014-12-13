@@ -1,5 +1,8 @@
 package gui.panels;
 
+import core.Jeu;
+import gui.MainFrame;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -18,12 +21,13 @@ public class JPanelPlateau extends JPanel {
     }
 
     public void paint(Graphics g){
-        int tailleH = 700 / 5;
-        int tailleV = 550 / 5;
+        Jeu jeu = ((MainFrame) this.getParent().getParent().getParent().getParent().getParent()).getJeu();
+        int tailleH = 700 / jeu.getnColonnes();
+        int tailleV = 550 / jeu.getnLignes();
         boolean color = true;
 
-        for(int i = 0 ; i < 5 ; i++){
-            for(int j = 0 ; j < 5 ; j++){
+        for(int i = 0 ; i < jeu.getnColonnes() ; i++){
+            for(int j = 0 ; j < jeu.getnLignes() ; j++){
                 if(color){
                     g.setColor(Color.LIGHT_GRAY);
                 } else {
@@ -31,6 +35,9 @@ public class JPanelPlateau extends JPanel {
                 }
 
                 g.fillRect(i * tailleH, j * tailleV, tailleH, tailleV);
+                color = !color;
+            }
+            if(jeu.getnLignes() % 2 == 0){
                 color = !color;
             }
         }

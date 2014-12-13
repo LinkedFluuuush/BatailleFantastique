@@ -17,6 +17,8 @@ public class MainFrame extends JFrame {
 
     private Jeu jeu;
     private JPanel mainPanel;
+    private JPanelPlateau panelPlateau;
+    private JPanelStat panelStat;
 
     public MainFrame(String title) throws HeadlessException {
         super(title);
@@ -44,11 +46,28 @@ public class MainFrame extends JFrame {
     private void setPanePlateaux() {
         mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
 
-        mainPanel.add(new JPanelStat());
-        mainPanel.add(new JPanelPlateau());
+        panelStat = new JPanelStat();
+        panelPlateau = new JPanelPlateau();
+
+        updateFromState(this.getJeu());
+
+        mainPanel.add(panelStat);
+        mainPanel.add(panelPlateau);
 
         mainPanel.updateUI();
         this.pack();
+    }
+
+    private void updateFromState(Jeu jeu){
+        switch (jeu.getEtatCourant()){
+            case SELECTION:
+                panelStat.interfaceSelection();
+                break;
+            case PLACEMENT:
+                break;
+            case ENCOURS:
+                break;
+        }
     }
 
     /**

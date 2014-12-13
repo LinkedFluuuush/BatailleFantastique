@@ -18,17 +18,28 @@ public class Jeu {
 	private LinkedList<Joueur> joueurs;
     private Joueur joueurCourant;
 //	private Attaque attaqueCourante;
-	
-	/**
+
+    public enum Etat {
+        SELECTION, ENCOURS, PLACEMENT;
+    }
+
+    private Etat etatCourant;
+
+    private int nPersonnages;
+    private int nColonnes;
+    private int nLignes;
+
+    /**
 	 * @param persoAttaquant
 	 * @param joueurs
 	 */
-	public Jeu(Personnage persoAttaquant, LinkedList<Joueur> joueurs) {
+	public Jeu(Personnage persoAttaquant, LinkedList<Joueur> joueurs, Etat etatCourant) {
 		super();
 		this.persoAttaquant = persoAttaquant;
 		this.joueurs = joueurs;
 		this.joueurCourant = joueurs.getFirst();
 //		this.attaqueCourante = null;
+        this.etatCourant = etatCourant;
 	}
 	
 	/**
@@ -37,6 +48,7 @@ public class Jeu {
 	public Jeu() {
 		super();
 		this.joueurs = new LinkedList<Joueur>();
+        this.etatCourant = Etat.SELECTION;
 	}
 
 	/**
@@ -79,8 +91,72 @@ public class Jeu {
     public void setJoueurCourant(Joueur joueurCourant) {
         this.joueurCourant = joueurCourant;
     }
-	
-	/**
+
+    /**
+     *
+     * @return l'état en cours du jeu
+     */
+    public Etat getEtatCourant() {
+        return etatCourant;
+    }
+
+    /**
+     *
+     * @param etatCourant Le nouvel état du jeu
+     */
+    public void setEtatCourant(Etat etatCourant) {
+        this.etatCourant = etatCourant;
+    }
+
+    /**
+     *
+     * @return la taille de chaque équipe
+     */
+    public int getnPersonnages() {
+        return nPersonnages;
+    }
+
+    /**
+     *
+     * @param nPersonnages la nouvelle taille d'équipe
+     */
+    public void setnPersonnages(int nPersonnages) {
+        this.nPersonnages = nPersonnages;
+    }
+
+    /**
+     *
+     * @return le nombre de colonnes
+     */
+    public int getnColonnes() {
+        return nColonnes;
+    }
+
+    /**
+     *
+     * @param nColonnes Le nouveau nombre de colonnes
+     */
+    public void setnColonnes(int nColonnes) {
+        this.nColonnes = nColonnes;
+    }
+
+    /**
+     *
+     * @return Le nombre de lignes
+     */
+    public int getnLignes() {
+        return nLignes;
+    }
+
+    /**
+     *
+     * @param nLignes Le nouveau nombre de lignes
+     */
+    public void setnLignes(int nLignes) {
+        this.nLignes = nLignes;
+    }
+
+    /**
 	 * Indique le personnage choisi par la joueur et demande à l'ajouter à l'équipe du joueur
 	 * @param nomType nom du type du personnage choisi 
 	 * @param joueur indice du joueur dans la liste des joueurs

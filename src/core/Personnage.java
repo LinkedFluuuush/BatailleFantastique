@@ -27,6 +27,7 @@ public abstract class Personnage {
 		this.positionY = 0;
 		this.malusDeplacement = 0;
 		this.protection = 0;
+        this.attaques = new LinkedList<Attaque>();
 	}
 	
 	/**
