@@ -2,6 +2,7 @@ package gui;
 
 import core.Jeu;
 import gui.menuBar.BatailleMenuBar;
+import gui.panels.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,13 +16,18 @@ import java.awt.*;
 public class MainFrame extends JFrame {
 
     private Jeu jeu;
+    private JPanel mainPanel;
 
     public MainFrame(String title) throws HeadlessException {
         super(title);
 
         this.setJMenuBar(new BatailleMenuBar());
 
-        this.setBounds(10, 10, 1000, 550);
+        mainPanel = new JPanel();
+        this.add(mainPanel);
+
+        this.setResizable(false);
+        this.setBounds(10, 10, 550, 550);
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setVisible(true);
     }
@@ -32,6 +38,17 @@ public class MainFrame extends JFrame {
 
     public void setJeu(Jeu jeu) {
         this.jeu = jeu;
+        this.setPanePlateaux();
+    }
+
+    private void setPanePlateaux() {
+        mainPanel.setLayout(new FlowLayout(FlowLayout.LEADING, 0, 0));
+
+        mainPanel.add(new JPanelStat());
+        mainPanel.add(new JPanelPlateau());
+
+        mainPanel.updateUI();
+        this.pack();
     }
 
     /**

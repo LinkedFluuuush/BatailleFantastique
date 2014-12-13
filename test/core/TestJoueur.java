@@ -3,7 +3,6 @@ package core;
 import exception.ClassePersonnageManquanteException;
 import org.junit.Test;
 
-import core.*;
 import static org.junit.Assert.*;
 
 /**
@@ -15,7 +14,7 @@ public class TestJoueur {
     @Test
     public void testCreate(){
         String nom = "toto";
-        Joueur j1 = new Joueur(nom);
+        core.Joueur j1 = new Joueur(nom);
 
         assertTrue(j1.getNom().equals(nom));
     }

@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Random;
 
 /**
  * Created by Jean-Baptiste Louvet on 03/12/14.
@@ -50,9 +51,12 @@ public class NouveauJeuActionListener implements ActionListener {
         buttonOK.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
+                Random r = new Random();
                 Jeu j = new Jeu();
                 j.addJoueur(new Joueur(textNameJ1.getText()));
                 j.addJoueur(new Joueur(textNameJ2.getText()));
+
+                j.setJoueurCourant(j.getJoueurs().get(r.nextInt(1)));
 
                 ((MainFrame) theBar.getParent().getParent().getParent()).setJeu(j);
                 theBar.setNouveauJeuClicable(false);

@@ -10,13 +10,13 @@ import exception.DeplacementException;
 /**
  * Description de la classe
  * @author llaluque jlouvet
- * @version
+ * @version 1.5
  */
 public class Jeu {
 
 	private Personnage persoAttaquant;
 	private LinkedList<Joueur> joueurs;
-	private Joueur joueurCourant;
+    private Joueur joueurCourant;
 //	private Attaque attaqueCourante;
 	
 	/**
@@ -63,6 +63,22 @@ public class Jeu {
 	public void addJoueur(Joueur joueur) {
 		this.joueurs.add(joueur);
 	}
+
+    /**
+     *
+     * @return Le joueur dont c'est el tour de jouer
+     */
+    public Joueur getJoueurCourant() {
+        return joueurCourant;
+    }
+
+    /**
+     *
+     * @param joueurCourant Le nouveau joueur qui doit jouer
+     */
+    public void setJoueurCourant(Joueur joueurCourant) {
+        this.joueurCourant = joueurCourant;
+    }
 	
 	/**
 	 * Indique le personnage choisi par la joueur et demande à l'ajouter à l'équipe du joueur
