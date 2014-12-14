@@ -26,11 +26,11 @@ public class PlateauMouseListener implements MouseListener {
         int tailleH = 700 / jeu.getnColonnes();
         int tailleV = 550 / jeu.getnLignes();
 
-        System.out.println("Click ! Coord : " + e.getX() + " x " + e.getY());
-        System.out.println("Click ! Coord : " + e.getX()/tailleH + " x " + e.getY()/tailleV);
         Personnage temp = jeu.getPerso(e.getX()/tailleH, e.getY()/tailleV);
+        jeu.setPersoAttaquant(temp);
         if(temp != null){
             ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateStats(temp);
+            panelPlateau.repaint();
         }
     }
 

@@ -24,6 +24,7 @@ public class JPanelPlateau extends JPanel {
 
     }
 
+    @Override
     public void paint(Graphics g){
         Jeu jeu = ((MainFrame)this.getTopLevelAncestor()).getJeu();
         int tailleH = 700 / jeu.getnColonnes();
@@ -63,6 +64,11 @@ public class JPanelPlateau extends JPanel {
                 }
                 g.fillRect(i * tailleH, j * tailleV, tailleH, tailleV);
                 color = !color;
+
+                if(jeu.getPersoAttaquant() != null){
+                    g.setColor(Color.GREEN);
+                    g.drawRect(jeu.getPersoAttaquant().getPositionX() * tailleH, jeu.getPersoAttaquant().getPositionY() * tailleV, tailleH, tailleV);
+                }
 
                 g.setColor(Color.BLACK);
                 g.drawString(type, i * tailleH + (tailleH/2), j * tailleV + (tailleV/2));

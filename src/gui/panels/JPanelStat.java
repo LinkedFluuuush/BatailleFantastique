@@ -16,13 +16,14 @@ import java.util.LinkedList;
  */
 public class JPanelStat extends JPanel {
 
+    private JPanel panelResumePerso;
+
     //Composants pour l'interface de sélection d'équipe
     private JComboBox<String> typesPersoComboBox;
     private JTextField nomPersonnageTextField;
     private JTextField agePersonnageTextField;
     private JButton ajouterPersonnageButton;
     private JLabel labelError;
-    private JPanel resumePersos;
     private JPanel panelSelection;
 
     //Composants pour l'interface de jeu
@@ -32,8 +33,6 @@ public class JPanelStat extends JPanel {
     private JLabel labelStatut;
     private JLabel labelPV;
     private JLabel labelDeplacement;
-
-
 
     public JPanelStat(){
         this.setPreferredSize(new Dimension(300, 550));
@@ -55,8 +54,8 @@ public class JPanelStat extends JPanel {
         ajouterPersonnageButton.addActionListener(new AddPersonnageActionListener(this, jeu));
 
         panelSelection = new JPanel();
-        resumePersos = new JPanel();
-        resumePersos.setLayout(new BoxLayout(resumePersos, BoxLayout.PAGE_AXIS));
+        panelResumePerso = new JPanel();
+        panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
 
         panelSelection.setLayout(new BoxLayout(panelSelection, BoxLayout.PAGE_AXIS));
 
@@ -71,7 +70,7 @@ public class JPanelStat extends JPanel {
 
         this.add(panelSelection);
         this.add(labelError);
-        this.add(resumePersos);
+        this.add(panelResumePerso);
     }
 
     public void majResumePersos(Joueur j){
@@ -80,7 +79,7 @@ public class JPanelStat extends JPanel {
         Personnage p;
         JPanel unPerso;
 
-        resumePersos.removeAll();
+        panelResumePerso.removeAll();
 
         while(persosIt.hasNext()){
             p = persosIt.next();
@@ -91,13 +90,22 @@ public class JPanelStat extends JPanel {
             unPerso.add(new JLabel(p.getAge() + " ans"));
             unPerso.setBorder(BorderFactory.createEtchedBorder());
 
-            resumePersos.add(unPerso);
+            panelResumePerso.add(unPerso);
         }
     }
 
     public void interfaceJeu(Jeu jeu){
-        JPanel panelResumePerso = new JPanel();
+        panelResumePerso.removeAll();
+
+        this.updateUI();
+
         panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
+
+        this.add(panelResumePerso);
+    }
+
+    public void updateStats(Personnage perso) {
+        panelResumePerso.removeAll();
 
         labelClasse = new JLabel();
         labelNom = new JLabel();
@@ -113,12 +121,6 @@ public class JPanelStat extends JPanel {
         panelResumePerso.add(labelDeplacement);
         panelResumePerso.add(labelPV);
 
-        panelResumePerso.setBorder(BorderFactory.createTitledBorder(""));
-
-        this.add(panelResumePerso);
-    }
-
-    public void updateStats(Personnage perso) {
         if(perso.getClass() == Mage.class){
             labelClasse.setText("Mage");
         } else if(perso.getClass() == Voleur.class){
@@ -134,6 +136,8 @@ public class JPanelStat extends JPanel {
         labelStatut.setText("Statut : En vie");
         labelDeplacement.setText("Déplacement : " + perso.getDeplacement() + " cases par tour");
         labelPV.setText("Vie : " + perso.getPv() + " PV");
+
+
 
         this.updateUI();
     }
