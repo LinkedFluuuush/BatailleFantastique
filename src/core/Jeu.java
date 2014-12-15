@@ -16,7 +16,7 @@ public class Jeu {
 	private Personnage persoAttaquant;
 	private LinkedList<Joueur> joueurs;
     private Joueur joueurCourant;
-//	private Attaque attaqueCourante;
+	private Attaque attaqueCourante;
 
     /**
      * Définit l'état du jeu. Permet à l'interface de savoir ou en est la partie
@@ -172,7 +172,15 @@ public class Jeu {
         this.nLignes = nLignes;
     }
 
-    /**
+	public Attaque getAttaqueCourante() {
+		return attaqueCourante;
+	}
+
+	public void setAttaqueCourante(Attaque attaqueCourante) {
+		this.attaqueCourante = attaqueCourante;
+	}
+
+	/**
 	 * Indique le personnage choisi par la joueur et demande à l'ajouter à l'équipe du joueur
 	 * @param nomType nom du type du personnage choisi 
 	 * @param joueur indice du joueur dans la liste des joueurs

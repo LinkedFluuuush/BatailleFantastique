@@ -57,7 +57,7 @@ public class NouveauJeuActionListener implements ActionListener {
                 j.addJoueur(new Joueur(textNameJ2.getText()));
 
                 j.setJoueurCourant(j.getJoueurs().get(r.nextInt(2)));
-                j.setnPersonnages(5);
+                j.setnPersonnages(2);
                 j.setnColonnes(10);
                 j.setnLignes(10);
 

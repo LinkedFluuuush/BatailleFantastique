@@ -14,6 +14,8 @@ public abstract class Personnage {
     protected int pv; // points de vie
 	protected boolean terrestre; // vaut vrai si le personnage est terrestre
 	private int protection; // protection dont le personnage peut bénéficier grâce à l'instinct d'esquive, par exemple
+	private boolean attaqueFaite;
+	private boolean deplacementFait;
 	
 	/**
 	 * @param nom
@@ -28,6 +30,8 @@ public abstract class Personnage {
 		this.malusDeplacement = 0;
 		this.protection = 0;
         this.attaques = new LinkedList<Attaque>();
+		this.deplacementFait = false;
+		this.attaqueFaite = false;
 	}
 	
 	/**
@@ -88,6 +92,22 @@ public abstract class Personnage {
     public void setPv(int pv) {
         this.pv = pv;
     }
+
+	public boolean isAttaqueFaite() {
+		return attaqueFaite;
+	}
+
+	public void setAttaqueFaite(boolean attaqueFaite) {
+		this.attaqueFaite = attaqueFaite;
+	}
+
+	public boolean isDeplacementFait() {
+		return deplacementFait;
+	}
+
+	public void setDeplacementFait(boolean deplacementFait) {
+		this.deplacementFait = deplacementFait;
+	}
 
 	/** Modifie le nombre de points de vie du personnage
 	 * @param attaque effet d'une attaque subie
