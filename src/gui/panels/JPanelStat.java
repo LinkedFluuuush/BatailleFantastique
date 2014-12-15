@@ -17,6 +17,7 @@ import java.util.LinkedList;
 public class JPanelStat extends JPanel {
 
     private JPanel panelResumePerso;
+    private JPanel panelResumeActions;
 
     //Composants pour l'interface de sélection d'équipe
     private JComboBox<String> typesPersoComboBox;
@@ -95,17 +96,21 @@ public class JPanelStat extends JPanel {
     }
 
     public void interfaceJeu(Jeu jeu){
-        panelResumePerso.removeAll();
+        panelResumePerso = new JPanel();
+        panelResumeActions = new JPanel();
 
         this.updateUI();
 
         panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
+        panelResumeActions.setLayout(new BoxLayout(panelResumeActions, BoxLayout.PAGE_AXIS));
 
         this.add(panelResumePerso);
+        this.add(panelResumeActions);
     }
 
     public void updateStats(Personnage perso) {
         panelResumePerso.removeAll();
+        panelResumeActions.removeAll();
 
         labelClasse = new JLabel();
         labelNom = new JLabel();
@@ -137,8 +142,17 @@ public class JPanelStat extends JPanel {
         labelDeplacement.setText("Déplacement : " + perso.getDeplacement() + " cases par tour");
         labelPV.setText("Vie : " + perso.getPv() + " PV");
 
+        this.updateUI();
+    }
 
+    public void updateActions(Personnage perso) {
+        panelResumeActions.removeAll();
 
+        for(int i = 0; i < perso.getAttaques().size(); i++){
+            panelResumeActions.add(new JButton(perso.getAttaques().get(i).getNom()));
+        }
+
+        panelResumeActions.setBorder(BorderFactory.createTitledBorder("Attaques"));
         this.updateUI();
     }
 

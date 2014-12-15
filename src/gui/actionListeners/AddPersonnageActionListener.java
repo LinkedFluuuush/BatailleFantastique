@@ -40,7 +40,6 @@ public class AddPersonnageActionListener implements ActionListener {
                     panelStat.getTypesPersoComboBox().setSelectedIndex(0);
                     panelStat.getNomPersonnageTextField().setText("");
                     panelStat.getAgePersonnageTextField().setText("");
-                    System.out.println("Added : " + typePerso + " : " + nomPerso + ", " + agePerso + "ans.");
 
                     if(jeu.getJoueurCourant().getPersonnages().size() == jeu.getnPersonnages()){
                         for(int i = 0; i < jeu.getJoueurs().size(); i++){

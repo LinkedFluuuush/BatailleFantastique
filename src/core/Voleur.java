@@ -29,10 +29,10 @@ public class Voleur extends Personnage {
         nbCasesParcourues += deltaY;
         if(directionUnique){
             // Sans diagonale, le voleur se déplace de 3
-            return((nbCasesParcourues > this.deplacement + 1) || j.getPerso(x,y) == null);
+            return((nbCasesParcourues <= this.deplacement + 1) && j.getPerso(x,y) == null);
         } else {
             // Avec diagonale, le voleur se déplace de 2
-            return((nbCasesParcourues > this.deplacement) || j.getPerso(x,y) == null);
+            return((nbCasesParcourues <= this.deplacement) && j.getPerso(x,y) == null);
         }
     }
 }

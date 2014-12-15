@@ -6,6 +6,7 @@ import gui.actionListeners.PlateauMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.LinkedList;
 
 /**
  * User: Linked
@@ -14,14 +15,21 @@ import java.awt.*;
  */
 public class JPanelPlateau extends JPanel {
 
+    LinkedList<Point> casesDeplacement;
+
     public JPanelPlateau(){
         this.setPreferredSize(new Dimension(700,550));
         this.setBackground(Color.WHITE);
 
+        this.casesDeplacement = new LinkedList<Point>();
+
         this.repaint();
 
         this.addMouseListener(new PlateauMouseListener(this));
+    }
 
+    public void setCasesDeplacement(LinkedList<Point> casesDeplacement) {
+        this.casesDeplacement = casesDeplacement;
     }
 
     @Override
@@ -33,6 +41,8 @@ public class JPanelPlateau extends JPanel {
 
         String type;
         Personnage temp;
+
+        Point p = new Point();
 
         for(int i = 0 ; i < jeu.getnColonnes() ; i++){
             for(int j = 0 ; j < jeu.getnLignes() ; j++){
@@ -65,9 +75,10 @@ public class JPanelPlateau extends JPanel {
                 g.fillRect(i * tailleH, j * tailleV, tailleH, tailleV);
                 color = !color;
 
-                if(jeu.getPersoAttaquant() != null){
-                    g.setColor(Color.GREEN);
-                    g.drawRect(jeu.getPersoAttaquant().getPositionX() * tailleH, jeu.getPersoAttaquant().getPositionY() * tailleV, tailleH, tailleV);
+                p.setLocation(i, j);
+                if(casesDeplacement.contains(p)){
+                    g.setColor(Color.BLUE);
+                    g.drawRect(i * tailleH, j * tailleV, tailleH - 1, tailleV - 1);
                 }
 
                 g.setColor(Color.BLACK);
@@ -76,6 +87,11 @@ public class JPanelPlateau extends JPanel {
             if(jeu.getnLignes() % 2 == 0){
                 color = !color;
             }
+        }
+
+        if(jeu.getPersoAttaquant() != null){
+            g.setColor(Color.GREEN);
+            g.drawRect(jeu.getPersoAttaquant().getPositionX() * tailleH, jeu.getPersoAttaquant().getPositionY() * tailleV, tailleH, tailleV);
         }
     }
 }
