@@ -26,6 +26,7 @@ public class SelectAttaqueActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Jeu jeu = ((MainFrame)panelStat.getTopLevelAncestor()).getJeu();
         jeu.setAttaqueCourante(attaque);
-        panelStat.getLabelAttaque().setText("Attaque sélectionnée : " + jeu.getAttaqueCourante().getNom());
+        jeu.getPersoAttaquant().setnAttaquesRestantes(attaque.getnAttaques());
+        panelStat.getLabelAttaque().setText("<html><p>Attaque sélectionnée : " + jeu.getAttaqueCourante().getNom() + "</p></html>");
     }
 }

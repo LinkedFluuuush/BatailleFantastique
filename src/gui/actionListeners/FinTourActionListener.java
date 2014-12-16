@@ -5,7 +5,6 @@ import gui.MainFrame;
 import gui.panels.JPanelPlateau;
 import gui.panels.JPanelStat;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,7 +26,7 @@ public class FinTourActionListener implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         Jeu jeu = ((MainFrame)panelStat.getTopLevelAncestor()).getJeu();
         if(jeu.getPersoAttaquant() != null) {
-            jeu.getPersoAttaquant().setAttaqueFaite(false);
+            jeu.getPersoAttaquant().setnAttaquesRestantes(-1);
             jeu.getPersoAttaquant().setDeplacementFait(false);
         }
         jeu.setPersoAttaquant(null);

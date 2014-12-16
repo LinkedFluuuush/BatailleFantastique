@@ -5,7 +5,6 @@ import core.Personnage;
 import gui.MainFrame;
 import gui.panels.JPanelPlateau;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
@@ -35,7 +34,7 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
 
         if(jeu.getPersoAttaquant() != null){
             if(jeu.getAttaqueCourante() != null){
-                if(!jeu.getPersoAttaquant().isAttaqueFaite()) {
+                if(jeu.getPersoAttaquant().getnAttaquesRestantes() != 0) {
                     if ((caseX == jeu.getPersoAttaquant().getPositionX() && Math.abs(jeu.getPersoAttaquant().getPositionX() - caseX) <= jeu.getAttaqueCourante().getPortee())
                             || (caseY == jeu.getPersoAttaquant().getPositionY() && Math.abs(jeu.getPersoAttaquant().getPositionY() - caseY) <= jeu.getAttaqueCourante().getPortee())) {
                         for (int i = (Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)); i <= Math.min(caseX + (jeu.getAttaqueCourante().getZone()/2), jeu.getnColonnes()); i++) {
@@ -45,15 +44,20 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                                     jeu.attaquerCible(jeu.getAttaqueCourante(), temp);
 
                                     if(jeu.getJoueurs().size() == 1){
+                                        jeu.setJoueurCourant(jeu.getJoueurs().getFirst());
                                         ((MainFrame)panelPlateau.getTopLevelAncestor()).victory();
                                         return;
                                     }
                                 }
                             }
                         }
-                        jeu.getPersoAttaquant().setAttaqueFaite(true);
-                        jeu.setAttaqueCourante(null);
-                        ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelAttaque().setText("");
+                        jeu.getPersoAttaquant().setnAttaquesRestantes(jeu.getPersoAttaquant().getnAttaquesRestantes() - 1);
+
+                        if(jeu.getPersoAttaquant().getnAttaquesRestantes() == 0) {
+                            jeu.setAttaqueCourante(null);
+                            ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelAttaque().setText("");
+                        }
+
                         ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().attaqueEnabled(false);
                         panelPlateau.setZoneCible(null);
                     }
@@ -64,8 +68,8 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                 panelPlateau.setCasesDeplacement(new LinkedList<Point>());
             }
 
-            if(jeu.getPersoAttaquant().isAttaqueFaite() && jeu.getPersoAttaquant().isDeplacementFait()){
-                jeu.getPersoAttaquant().setAttaqueFaite(false);
+            if(jeu.getPersoAttaquant().getnAttaquesRestantes() == 0 && jeu.getPersoAttaquant().isDeplacementFait()){
+                jeu.getPersoAttaquant().setnAttaquesRestantes(-1);
                 jeu.getPersoAttaquant().setDeplacementFait(false);
                 jeu.setPersoAttaquant(null);
                 jeu.setAttaqueCourante(null);
