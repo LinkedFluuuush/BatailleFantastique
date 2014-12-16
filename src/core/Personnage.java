@@ -25,8 +25,8 @@ public abstract class Personnage {
 		super();
 		this.nom = nom;
 		this.age = age;
-		this.positionX = 0;
-		this.positionY = 0;
+		this.positionX = -1;
+		this.positionY = -1;
 		this.malusDeplacement = 0;
 		this.protection = 0;
         this.attaques = new LinkedList<Attaque>();
