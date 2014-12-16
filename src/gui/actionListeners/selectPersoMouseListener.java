@@ -14,13 +14,13 @@ import java.awt.event.MouseListener;
  * Date: 16/12/2014
  * Time: 22:50
  */
-public class selectPersoMouseListener implements MouseListener {
+public class SelectPersoMouseListener implements MouseListener {
     private Jeu jeu;
     private Personnage p;
     private JPanel panel;
     private JPanel panelResume;
 
-    public selectPersoMouseListener(Jeu jeu, Personnage p, JPanel panel, JPanel panelResume) {
+    public SelectPersoMouseListener(Jeu jeu, Personnage p, JPanel panel, JPanel panelResume) {
         this.jeu = jeu;
         this.p = p;
         this.panel = panel;

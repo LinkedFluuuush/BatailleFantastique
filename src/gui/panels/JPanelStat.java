@@ -5,12 +5,10 @@ import gui.MainFrame;
 import gui.actionListeners.AddPersonnageActionListener;
 import gui.actionListeners.FinTourActionListener;
 import gui.actionListeners.SelectAttaqueActionListener;
-import gui.actionListeners.selectPersoMouseListener;
+import gui.actionListeners.SelectPersoMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Iterator;
 import java.util.LinkedList;
 
@@ -295,8 +293,8 @@ public class JPanelStat extends JPanel {
                 unPerso.add(new JLabel(p.getAge() + " ans"));
                 unPerso.setBorder(BorderFactory.createEtchedBorder());
 
-//                unPerso.addActionListener(new selectPersoMouseListener(((MainFrame) this.getTopLevelAncestor()).getJeu(), p, unPerso, panelResumePerso));
-                unPerso.addMouseListener(new selectPersoMouseListener(((MainFrame) this.getTopLevelAncestor()).getJeu(), p, unPerso, panelResumePerso));
+//                unPerso.addActionListener(new SelectPersoMouseListener(((MainFrame) this.getTopLevelAncestor()).getJeu(), p, unPerso, panelResumePerso));
+                unPerso.addMouseListener(new SelectPersoMouseListener(((MainFrame) this.getTopLevelAncestor()).getJeu(), p, unPerso, panelResumePerso));
 
                 panelResumePerso.add(unPerso);
             }

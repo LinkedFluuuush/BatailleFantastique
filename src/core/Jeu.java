@@ -292,7 +292,7 @@ public class Jeu {
 		int effet; // effets de l'attaque
         persoCible.appliquerEffets(attaque);
 
-        if(persoCible.getPv() == 0){
+        if(persoCible.getPv() <= 0){
             for(Joueur j : this.getJoueurs()){
                 if(j.getPersonnages().contains(persoCible)){
                     j.getPersonnages().remove(persoCible);
