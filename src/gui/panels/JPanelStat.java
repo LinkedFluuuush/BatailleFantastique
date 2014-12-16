@@ -1,10 +1,10 @@
 package gui.panels;
 
-import core.Jeu;
-import core.Joueur;
-import core.Personnage;
+import core.*;
 import gui.MainFrame;
 import gui.actionListeners.AddPersonnageActionListener;
+import gui.actionListeners.FinTourActionListener;
+import gui.actionListeners.SelectAttaqueActionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,16 +18,30 @@ import java.util.LinkedList;
  */
 public class JPanelStat extends JPanel {
 
+    private JPanel panelResumePerso;
+    private JPanel panelResumeActions;
+
+    //Composants pour l'interface de sélection d'équipe
     private JComboBox<String> typesPersoComboBox;
     private JTextField nomPersonnageTextField;
     private JTextField agePersonnageTextField;
     private JButton ajouterPersonnageButton;
     private JLabel labelError;
-    private JPanel resumePersos;
     private JPanel panelSelection;
+
+    //Composants pour l'interface de jeu
+    private JLabel labelClasse;
+    private JLabel labelNom;
+    private JLabel labelAge;
+    private JLabel labelStatut;
+    private JLabel labelPV;
+    private JLabel labelDeplacement;
+    private JLabel labelAttaque;
+    private JLabel labelJoueur;
 
     public JPanelStat(){
         this.setPreferredSize(new Dimension(300, 550));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     }
 
     public void interfaceSelection(Jeu jeu) {
@@ -46,8 +60,8 @@ public class JPanelStat extends JPanel {
         ajouterPersonnageButton.addActionListener(new AddPersonnageActionListener(this, jeu));
 
         panelSelection = new JPanel();
-        resumePersos = new JPanel();
-        resumePersos.setLayout(new BoxLayout(resumePersos, BoxLayout.PAGE_AXIS));
+        panelResumePerso = new JPanel();
+        panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
 
         panelSelection.setLayout(new BoxLayout(panelSelection, BoxLayout.PAGE_AXIS));
 
@@ -62,7 +76,7 @@ public class JPanelStat extends JPanel {
 
         this.add(panelSelection);
         this.add(labelError);
-        this.add(resumePersos);
+        this.add(panelResumePerso);
     }
 
     public void majResumePersos(Joueur j){
@@ -71,19 +85,119 @@ public class JPanelStat extends JPanel {
         Personnage p;
         JPanel unPerso;
 
-        resumePersos.removeAll();
+        panelResumePerso.removeAll();
 
         while(persosIt.hasNext()){
             p = persosIt.next();
             unPerso = new JPanel();
             unPerso.setLayout(new BoxLayout(unPerso, BoxLayout.PAGE_AXIS));
-            unPerso.add(new JLabel(p.getClass().toString()));
+            
+            if (p.getClass() == Mage.class) {
+                unPerso.add(new JLabel("Mage"));
+            } else if (p.getClass() == Voleur.class) {
+                unPerso.add(new JLabel("Voleur"));
+            } else if (p.getClass() == Guerrier.class) {
+                unPerso.add(new JLabel("Guerrier"));
+            } else if (p.getClass() == CavalierCeleste.class) {
+                unPerso.add(new JLabel("Cavalier Céleste"));
+            }
+
             unPerso.add(new JLabel(p.getNom()));
             unPerso.add(new JLabel(p.getAge() + " ans"));
             unPerso.setBorder(BorderFactory.createEtchedBorder());
 
-            resumePersos.add(unPerso);
+            panelResumePerso.add(unPerso);
         }
+    }
+
+    public void interfaceJeu(Jeu jeu){
+        panelResumePerso = new JPanel();
+        panelResumeActions = new JPanel();
+
+        panelResumePerso.setBorder(BorderFactory.createTitledBorder(""));
+
+        panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
+        panelResumeActions.setLayout(new BoxLayout(panelResumeActions, BoxLayout.PAGE_AXIS));
+
+        labelJoueur = new JLabel("Au tour de " + jeu.getJoueurCourant().getNom());
+        this.add(labelJoueur);
+
+        JButton buttonFinTour = new JButton("Fin du tour");
+        buttonFinTour.addActionListener(new FinTourActionListener(this));
+        this.add(buttonFinTour);
+
+        this.add(panelResumePerso);
+        this.add(panelResumeActions);
+
+        labelAttaque = new JLabel();
+        this.add(labelAttaque);
+
+        panelResumePerso.updateUI();
+        panelResumeActions.updateUI();
+        this.updateUI();
+    }
+
+    public void updateStats(Personnage perso) {
+        panelResumePerso.removeAll();
+        panelResumeActions.removeAll();
+
+        if(perso != null) {
+
+            labelClasse = new JLabel();
+            labelNom = new JLabel();
+            labelAge = new JLabel();
+            labelStatut = new JLabel();
+            labelPV = new JLabel();
+            labelDeplacement = new JLabel();
+
+            panelResumePerso.add(labelClasse);
+            panelResumePerso.add(labelNom);
+            panelResumePerso.add(labelAge);
+            panelResumePerso.add(labelStatut);
+            panelResumePerso.add(labelDeplacement);
+            panelResumePerso.add(labelPV);
+
+            if (perso.getClass() == Mage.class) {
+                labelClasse.setText("Mage");
+            } else if (perso.getClass() == Voleur.class) {
+                labelClasse.setText("Voleur");
+            } else if (perso.getClass() == Guerrier.class) {
+                labelClasse.setText("Guerrier");
+            } else if (perso.getClass() == CavalierCeleste.class) {
+                labelClasse.setText("Cavalier Céleste");
+            }
+
+            labelNom.setText(perso.getNom());
+            labelAge.setText(perso.getAge() + " ans");
+            if(perso.getMalusDeplacement() != 0) {
+                labelStatut.setText("Statut : Ralenti");
+            } else if(perso.getProtection() != 0) {
+                labelStatut.setText("Statut : Protégé");
+            } else {
+                labelStatut.setText("Statut : En vie");
+            }
+            labelDeplacement.setText("Déplacement : " + (perso.getDeplacement() - perso.getMalusDeplacement()) + " cases par tour");
+            labelPV.setText("Vie : " + perso.getPv() + " PV");
+        }
+
+        this.updateUI();
+    }
+
+    public void updateActions(Personnage perso, Jeu jeu) {
+        panelResumeActions.removeAll();
+        JButton buttonAttaque;
+
+        if(perso != null) {
+            for (int i = 0; i < perso.getAttaques().size(); i++) {
+                buttonAttaque = new JButton(perso.getAttaques().get(i).getNom());
+                buttonAttaque.addActionListener(new SelectAttaqueActionListener(perso.getAttaques().get(i), this));
+
+                panelResumeActions.add(buttonAttaque);
+            }
+        }
+
+        panelResumeActions.setBorder(BorderFactory.createTitledBorder("Attaques"));
+        this.updateUI();
     }
 
     public JComboBox<String> getTypesPersoComboBox() {
@@ -124,5 +238,25 @@ public class JPanelStat extends JPanel {
 
     public JPanel getPanelSelection() {
         return panelSelection;
+    }
+
+    public JPanel getPanelResumePerso() {
+        return panelResumePerso;
+    }
+
+    public JLabel getLabelAttaque() {
+        return labelAttaque;
+    }
+
+    public JLabel getLabelJoueur() {
+        return labelJoueur;
+    }
+
+    public void attaqueEnabled(boolean b) {
+        for(Component c : this.panelResumeActions.getComponents()){
+            if(c.getClass() == JButton.class){
+                c.setEnabled(b);
+            }
+        }
     }
 }

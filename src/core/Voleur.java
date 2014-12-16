@@ -14,9 +14,9 @@ public class Voleur extends Personnage {
         this.terrestre = true;
         // Attaques
 //		public Attaque(String nom, int portee, int zone, boolean ralentissement, int effet, boolean celeste, boolean terrestre)
-        this.attaques.add(new Attaque("Instinct d'esquive", 0, 0, false, 0, false, true));
-        this.attaques.add(new Attaque("Coup de jarnac", 4, 1, false, 1, false, true));
-        this.attaques.add(new Attaque("Fiole de poison", 2, 1, false, 2, false, true));
+        this.attaques.add(new Attaque("Instinct d'esquive", 0, 1, false, 0, false, true, 1));
+        this.attaques.add(new Attaque("Coup de jarnac", 4, 1, false, 1, false, true, 2));
+        this.attaques.add(new Attaque("Fiole de poison", 2, 1, false, 2, false, true, 1));
 	}
     
     public boolean verifDeplacementValide(int x, int y, Jeu j){
@@ -29,10 +29,10 @@ public class Voleur extends Personnage {
         nbCasesParcourues += deltaY;
         if(directionUnique){
             // Sans diagonale, le voleur se déplace de 3
-            return((nbCasesParcourues > this.deplacement + 1) || j.getPerso(x,y) == null);
+            return((nbCasesParcourues <= this.deplacement + 1 - this.malusDeplacement) && j.getPerso(x,y) == null);
         } else {
             // Avec diagonale, le voleur se déplace de 2
-            return((nbCasesParcourues > this.deplacement) || j.getPerso(x,y) == null);
+            return((nbCasesParcourues <= this.deplacement - this.malusDeplacement) && j.getPerso(x,y) == null);
         }
     }
 }

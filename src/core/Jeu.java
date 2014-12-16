@@ -13,11 +13,11 @@ import exception.DeplacementException;
  * @version 1.5
  */
 public class Jeu {
-
 	private Personnage persoAttaquant;
 	private LinkedList<Joueur> joueurs;
     private Joueur joueurCourant;
-//	private Attaque attaqueCourante;
+	private Attaque attaqueCourante;
+
 
     /**
      * Définit l'état du jeu. Permet à l'interface de savoir ou en est la partie
@@ -173,7 +173,15 @@ public class Jeu {
         this.nLignes = nLignes;
     }
 
-    /**
+	public Attaque getAttaqueCourante() {
+		return attaqueCourante;
+	}
+
+	public void setAttaqueCourante(Attaque attaqueCourante) {
+		this.attaqueCourante = attaqueCourante;
+	}
+
+	/**
 	 * Indique le personnage choisi par la joueur et demande à l'ajouter à l'équipe du joueur
 	 * @param nomType nom du type du personnage choisi 
 	 * @param joueur indice du joueur dans la liste des joueurs
@@ -283,7 +291,20 @@ public class Jeu {
 	public void attaquerCible(Attaque attaque, Personnage persoCible) {
 		int effet; // effets de l'attaque
         persoCible.appliquerEffets(attaque);
-		
+
+        if(persoCible.getPv() == 0){
+            for(Joueur j : this.getJoueurs()){
+                if(j.getPersonnages().contains(persoCible)){
+                    j.getPersonnages().remove(persoCible);
+
+                    if(j.getPersonnages().size() == 0){
+                        this.getJoueurs().remove(j);
+                    }
+
+                    break;
+                }
+            }
+        }
 	}
 	
 	/** Déplace le personnage sélectionné (persoAttaquant)

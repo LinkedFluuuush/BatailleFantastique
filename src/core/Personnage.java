@@ -10,10 +10,12 @@ public abstract class Personnage {
 	private int positionY;
 	protected LinkedList<Attaque> attaques;
 	protected int deplacement;
-	private int malusDeplacement;
-	protected int pv; // points de vie
+	protected int malusDeplacement;
+    protected int pv; // points de vie
 	protected boolean terrestre; // vaut vrai si le personnage est terrestre
 	private int protection; // protection dont le personnage peut bénéficier grâce à l'instinct d'esquive, par exemple
+	private int nAttaquesRestantes;
+	private boolean deplacementFait;
 	
 	/**
 	 * @param nom
@@ -28,6 +30,8 @@ public abstract class Personnage {
 		this.malusDeplacement = 0;
 		this.protection = 0;
         this.attaques = new LinkedList<Attaque>();
+		this.deplacementFait = false;
+		this.nAttaquesRestantes = -1;
 	}
 	
 	/**
@@ -80,8 +84,40 @@ public abstract class Personnage {
 	public int getDeplacement() {
 		return deplacement;
 	}
-	
-	/** Modifie le nombre de points de vie du personnage
+
+    public int getPv() {
+            return pv;
+    }
+
+    public void setPv(int pv) {
+        this.pv = pv;
+    }
+
+	public int getnAttaquesRestantes() {
+		return nAttaquesRestantes;
+	}
+
+	public void setnAttaquesRestantes(int nAttaquesRestantes) {
+		this.nAttaquesRestantes = nAttaquesRestantes;
+	}
+
+	public boolean isDeplacementFait() {
+		return deplacementFait;
+	}
+
+	public void setDeplacementFait(boolean deplacementFait) {
+		this.deplacementFait = deplacementFait;
+	}
+
+    public int getMalusDeplacement() {
+        return malusDeplacement;
+    }
+
+    public int getProtection(){
+        return  protection;
+    }
+
+    /** Modifie le nombre de points de vie du personnage
 	 * @param attaque effet d'une attaque subie
 	 */
 	public void appliquerEffets(Attaque attaque){
@@ -94,6 +130,7 @@ public abstract class Personnage {
 			} else {
 				if (attaque.getEffet() >= protection){
 					pv = pv - attaque.getEffet() + protection;
+                    protection = 0;
 				} else {
 					protection -= attaque.getEffet();
 					// Le nombre de PV ne change pas car la protection absorbe les dégâts faits par l'attaque
@@ -110,6 +147,7 @@ public abstract class Personnage {
 	public void deplacerPerso(int x, int y){
 		positionX = x;
 		positionY = y;
+        malusDeplacement = 0;
 	}
 	
 	/** Vérifie si le déplacement voulu est valide

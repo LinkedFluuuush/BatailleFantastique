@@ -33,6 +33,7 @@ public class Attaque {
 	private int effet; // nombre de points de vie perdus par la cible
 	private boolean celeste; // vaut vrai si l'attaque est céleste
 	private boolean terrestre; // vaut vrai si l'attaque est terrestre
+	private int nAttaques; // nombre d'attaques possibles avec cette attaque
 
 	/**
 	 * @param nom
@@ -42,9 +43,10 @@ public class Attaque {
 	 * @param effet
 	 * @param celeste
 	 * @param terrestre
+	 * @param nAttaques
 	 */
 	public Attaque(String nom, int portee, int zone, boolean ralentissement,
-			int effet, boolean celeste, boolean terrestre) {
+			int effet, boolean celeste, boolean terrestre, int nAttaques) {
 		super();
 		this.nom = nom;
 		this.portee = portee;
@@ -53,6 +55,7 @@ public class Attaque {
 		this.effet = effet;
 		this.celeste = celeste;
 		this.terrestre = terrestre;
+		this.nAttaques = nAttaques;
 	}
 	/**
 	 * @return the effet
@@ -114,5 +117,12 @@ public class Attaque {
 	public int getPortee() {
 		return portee;
 	}
-	
+
+	public int getnAttaques() {
+		return nAttaques;
+	}
+
+	public void setnAttaques(int nAttaques) {
+		this.nAttaques = nAttaques;
+	}
 }
