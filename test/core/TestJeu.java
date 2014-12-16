@@ -86,4 +86,39 @@ public class TestJeu {
 
         jeu.choixPersonnage("Halfing défectueux", 0, "Lulu", 74);
     }
+    
+    // Je n'arrive pas à run ces tests
+    
+    @Test
+    public void testChoixCase() throws ClassePersonnageManquanteException {
+        Jeu jeu = new Jeu();
+        Joueur j1 = new Joueur("Flibidi");
+        jeu.addJoueur(j1);
+        jeu.choixPersonnage("CavalierCeleste", 0, "Lulu", 74);
+        jeu.choixCase(0, 0);
+    }
+    
+    @Test
+    public void testGetCibles() throws ClassePersonnageManquanteException {
+        Jeu jeu = new Jeu();
+        Joueur j1 = new Joueur("Flibidi");
+        jeu.addJoueur(j1);
+        jeu.choixPersonnage("CavalierCeleste", 0, "Lulu", 74);
+        jeu.deplacer(1, 0, jeu.choixCase(0, 0)[2]);
+        jeu.choixPersonnage("Mage", 0, "Lolo", 69);
+        jeu.choixCase(0, 0);
+        jeu.getCibles("Enchevêtrement de ronces");
+    }
+    
+    @Test
+    public void testAttaquer() throws ClassePersonnageManquanteException {
+        Jeu jeu = new Jeu();
+        Joueur j1 = new Joueur("Flibidi");
+        jeu.addJoueur(j1);
+        jeu.choixPersonnage("CavalierCeleste", 0, "Lulu", 74);
+        jeu.deplacer(1, 0, jeu.choixCase(0, 0)[2]);
+        jeu.choixPersonnage("Mage", 0, "Lolo", 69);
+        jeu.choixCase(0, 0);
+        attaquerCible("Enchevêtrement de ronces",jeu.getCibles("Enchevêtrement de ronces")[0]);
+    }
 }

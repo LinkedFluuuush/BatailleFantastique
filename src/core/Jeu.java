@@ -95,7 +95,7 @@ public class Jeu {
 
     /**
      *
-     * @return Le joueur dont c'est el tour de jouer
+     * @return Le joueur dont c'est le tour de jouer
      */
     public Joueur getJoueurCourant() {
         return joueurCourant;
@@ -314,5 +314,43 @@ public class Jeu {
 //		return((nbCasesParcourues > deplacement) || getPerso(x,y) == null);
 //	}
 	
-	
+	/** Sélectionne un personnage
+	 * @param i position du personnage dans la liste du joueur
+	 */
+    public Personnage choixPerso(int i) {
+    	return joueurCourant.getPersonnages().get(i);
+    }
+    
+    /** Place un personnage sur le plateau
+	 * @param persoAPlacer personnage à placer
+	 * @param x abscisse de la case cible
+	 * @param y ordonnée de la case cible
+	 */
+    public void placePerso(Personnage persoAPlacer, int x, int y){
+    	if(getPerso(x,y) == null){
+    		persoAPlacer.nouvelleCase(x,y);
+    	}
+    }
+    
+    /** Vérifie que la taille de l'équipe est bien valide
+	 * @param n taille d'équipe proposée
+	 */
+    public boolean validerTailleEquipe(int n){
+    	return((n-5)*(n-1)<0); // Condition équivalente à "n<5 et n>1"
+    }
+    
+    /** Vérifie que la taille du plateau est bien valide
+	 * @param n nombre de ligne proposé
+	 * @param m nombre de colonnes proposé
+	 */
+    public boolean validerTaillePlateau (int n, int m){
+    	return((n>=5) && (m>=5));
+    }
+    
+    /** Vérifie que la taille de la zone de départ est bien valide
+	 * @param n nombre de rangées proposées pour le départ
+	 */
+    public boolean validerTailleZoneDepart(int n, int m){
+    	return((n>=2) && (n < nColonnes/2));
+    }
 }

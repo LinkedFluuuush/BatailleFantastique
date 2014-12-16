@@ -118,4 +118,13 @@ public abstract class Personnage {
 	 * @return validité du déplacement
 	 */
 	abstract public boolean verifDeplacementValide(int x, int y, Jeu j);
+	
+	/** Met le personnage à sa nouvelle position (pour le début de partie)
+	 * @param x abscisse de la case cible
+	 * @param y ordonnée de la case cible
+	 */
+	public void nouvelleCase(int x,int y) {
+		this.positionX = x;
+		this.positionY = y;
+	}
 }
