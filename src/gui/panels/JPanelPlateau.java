@@ -15,7 +15,8 @@ import java.util.LinkedList;
  */
 public class JPanelPlateau extends JPanel {
 
-    LinkedList<Point> casesDeplacement;
+    private LinkedList<Point> casesDeplacement;
+    private Rectangle zoneCible;
 
     public JPanelPlateau(){
         this.setPreferredSize(new Dimension(700,550));
@@ -25,11 +26,21 @@ public class JPanelPlateau extends JPanel {
 
         this.repaint();
 
-        this.addMouseListener(new PlateauMouseListener(this));
+        PlateauMouseListener plateauMouseListener = new PlateauMouseListener(this);
+        this.addMouseListener(plateauMouseListener);
+        this.addMouseMotionListener(plateauMouseListener);
     }
 
     public void setCasesDeplacement(LinkedList<Point> casesDeplacement) {
         this.casesDeplacement = casesDeplacement;
+    }
+
+    public void setZoneCible(Rectangle zoneCible) {
+        this.zoneCible = zoneCible;
+    }
+
+    public void setZoneCible(int x, int y, int width, int height) {
+        this.zoneCible = new Rectangle(x, y, width, height);
     }
 
     @Override
@@ -92,6 +103,13 @@ public class JPanelPlateau extends JPanel {
         if(jeu.getPersoAttaquant() != null){
             g.setColor(Color.GREEN);
             g.drawRect(jeu.getPersoAttaquant().getPositionX() * tailleH, jeu.getPersoAttaquant().getPositionY() * tailleV, tailleH, tailleV);
+        }
+
+        if(zoneCible != null){
+            Graphics2D g2d = (Graphics2D)g;
+            float alpha = 0.75f;
+            g2d.setColor(new Color(1, 0, 0, alpha));
+            g2d.fillRect(zoneCible.x, zoneCible.y, zoneCible.width, zoneCible.height);
         }
     }
 }

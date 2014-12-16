@@ -3,6 +3,8 @@ package gui.panels;
 import core.*;
 import gui.MainFrame;
 import gui.actionListeners.AddPersonnageActionListener;
+import gui.actionListeners.FinTourActionListener;
+import gui.actionListeners.SelectAttaqueActionListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -34,9 +36,12 @@ public class JPanelStat extends JPanel {
     private JLabel labelStatut;
     private JLabel labelPV;
     private JLabel labelDeplacement;
+    private JLabel labelAttaque;
+    private JLabel labelJoueur;
 
     public JPanelStat(){
         this.setPreferredSize(new Dimension(300, 550));
+        this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
     }
 
     public void interfaceSelection(Jeu jeu) {
@@ -99,57 +104,78 @@ public class JPanelStat extends JPanel {
         panelResumePerso = new JPanel();
         panelResumeActions = new JPanel();
 
+        panelResumePerso.setBorder(BorderFactory.createTitledBorder("Au tour de " + jeu.getJoueurCourant().getNom()));
+
         this.updateUI();
 
         panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
         panelResumeActions.setLayout(new BoxLayout(panelResumeActions, BoxLayout.PAGE_AXIS));
 
+        labelJoueur = new JLabel("Au tour de " + jeu.getJoueurCourant().getNom());
+        this.add(labelJoueur);
+
+        JButton buttonFinTour = new JButton("Fin du tour");
+        buttonFinTour.addActionListener(new FinTourActionListener(this));
+        this.add(buttonFinTour);
+
         this.add(panelResumePerso);
         this.add(panelResumeActions);
+
+        labelAttaque = new JLabel();
+        this.add(labelAttaque);
     }
 
     public void updateStats(Personnage perso) {
         panelResumePerso.removeAll();
         panelResumeActions.removeAll();
 
-        labelClasse = new JLabel();
-        labelNom = new JLabel();
-        labelAge = new JLabel();
-        labelStatut = new JLabel();
-        labelPV = new JLabel();
-        labelDeplacement = new JLabel();
+        if(perso != null) {
 
-        panelResumePerso.add(labelClasse);
-        panelResumePerso.add(labelNom);
-        panelResumePerso.add(labelAge);
-        panelResumePerso.add(labelStatut);
-        panelResumePerso.add(labelDeplacement);
-        panelResumePerso.add(labelPV);
+            labelClasse = new JLabel();
+            labelNom = new JLabel();
+            labelAge = new JLabel();
+            labelStatut = new JLabel();
+            labelPV = new JLabel();
+            labelDeplacement = new JLabel();
 
-        if(perso.getClass() == Mage.class){
-            labelClasse.setText("Mage");
-        } else if(perso.getClass() == Voleur.class){
-            labelClasse.setText("Voleur");
-        } else if(perso.getClass() == Guerrier.class){
-            labelClasse.setText("Guerrier");
-        } else if(perso.getClass() == CavalierCeleste.class){
-            labelClasse.setText("Cavalier Céleste");
+            panelResumePerso.add(labelClasse);
+            panelResumePerso.add(labelNom);
+            panelResumePerso.add(labelAge);
+            panelResumePerso.add(labelStatut);
+            panelResumePerso.add(labelDeplacement);
+            panelResumePerso.add(labelPV);
+
+            if (perso.getClass() == Mage.class) {
+                labelClasse.setText("Mage");
+            } else if (perso.getClass() == Voleur.class) {
+                labelClasse.setText("Voleur");
+            } else if (perso.getClass() == Guerrier.class) {
+                labelClasse.setText("Guerrier");
+            } else if (perso.getClass() == CavalierCeleste.class) {
+                labelClasse.setText("Cavalier Céleste");
+            }
+
+            labelNom.setText(perso.getNom());
+            labelAge.setText(perso.getAge() + " ans");
+            labelStatut.setText("Statut : En vie");
+            labelDeplacement.setText("Déplacement : " + perso.getDeplacement() + " cases par tour");
+            labelPV.setText("Vie : " + perso.getPv() + " PV");
         }
-
-        labelNom.setText(perso.getNom());
-        labelAge.setText(perso.getAge() + " ans");
-        labelStatut.setText("Statut : En vie");
-        labelDeplacement.setText("Déplacement : " + perso.getDeplacement() + " cases par tour");
-        labelPV.setText("Vie : " + perso.getPv() + " PV");
 
         this.updateUI();
     }
 
-    public void updateActions(Personnage perso) {
+    public void updateActions(Personnage perso, Jeu jeu) {
         panelResumeActions.removeAll();
+        JButton buttonAttaque;
 
-        for(int i = 0; i < perso.getAttaques().size(); i++){
-            panelResumeActions.add(new JButton(perso.getAttaques().get(i).getNom()));
+        if(perso != null) {
+            for (int i = 0; i < perso.getAttaques().size(); i++) {
+                buttonAttaque = new JButton(perso.getAttaques().get(i).getNom());
+                buttonAttaque.addActionListener(new SelectAttaqueActionListener(perso.getAttaques().get(i), this));
+
+                panelResumeActions.add(buttonAttaque);
+            }
         }
 
         panelResumeActions.setBorder(BorderFactory.createTitledBorder("Attaques"));
@@ -196,4 +222,23 @@ public class JPanelStat extends JPanel {
         return panelSelection;
     }
 
+    public JPanel getPanelResumePerso() {
+        return panelResumePerso;
+    }
+
+    public JLabel getLabelAttaque() {
+        return labelAttaque;
+    }
+
+    public JLabel getLabelJoueur() {
+        return labelJoueur;
+    }
+
+    public void attaqueEnabled(boolean b) {
+        for(Component c : this.panelResumeActions.getComponents()){
+            if(c.getClass() == JButton.class){
+                c.setEnabled(b);
+            }
+        }
+    }
 }

@@ -13,11 +13,11 @@ public class Mage extends Personnage {
 		this.pv = 8;
 		// Attaques
         // TODO : définir l'infini (à la place de 1000)
-        this.attaques.add(new Attaque("Tempête", 1000, 2, false, 4, true, false));
-        this.attaques.add(new Attaque("Tremblement de terre", 1000, 2, false, 3, false, true));
+        this.attaques.add(new Attaque("Tempête", 1000, 3, false, 4, true, false));
+        this.attaques.add(new Attaque("Tremblement de terre", 1000, 3, false, 3, false, true));
         this.attaques.add(new Attaque("Boule de feu", 4, 1, false, 4, true, true));
         this.attaques.add(new Attaque("Enchevêtrement de ronces", 4, 1, true, 0, false, true));
-        this.attaques.add(new Attaque("Terre marécageuse", 1000, 2, true, 0, false, true));
+        this.attaques.add(new Attaque("Terre marécageuse", 1000, 3, true, 0, false, true));
 	}
 
 	/** Vérifie si le déplacement voulu est valide

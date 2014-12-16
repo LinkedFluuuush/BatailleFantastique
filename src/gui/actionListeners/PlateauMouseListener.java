@@ -5,9 +5,11 @@ import core.Personnage;
 import gui.MainFrame;
 import gui.panels.JPanelPlateau;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.util.LinkedList;
 
 /**
@@ -15,7 +17,7 @@ import java.util.LinkedList;
  * Date: 13/12/14
  * Time: 22:23
  */
-public class PlateauMouseListener implements MouseListener {
+public class PlateauMouseListener implements MouseListener, MouseMotionListener {
     private JPanelPlateau panelPlateau;
 
     public PlateauMouseListener(JPanelPlateau panelPlateau) {
@@ -36,9 +38,9 @@ public class PlateauMouseListener implements MouseListener {
                 if(!jeu.getPersoAttaquant().isAttaqueFaite()) {
                     if ((caseX == jeu.getPersoAttaquant().getPositionX() && Math.abs(jeu.getPersoAttaquant().getPositionX() - caseX) <= jeu.getAttaqueCourante().getPortee())
                             || (caseY == jeu.getPersoAttaquant().getPositionY() && Math.abs(jeu.getPersoAttaquant().getPositionY() - caseY) <= jeu.getAttaqueCourante().getPortee())) {
-                        for (int i = Math.max(-(jeu.getAttaqueCourante().getZone() - 1), 0); i < Math.min((jeu.getAttaqueCourante().getZone() - 1), jeu.getnColonnes()); i++) {
-                            for (int j = Math.max(-(jeu.getAttaqueCourante().getZone() - 1), 0); j < Math.min((jeu.getAttaqueCourante().getZone() - 1), jeu.getnLignes()); j++) {
-                                Personnage temp = jeu.getPerso(caseX + i, caseY + j);
+                        for (int i = (Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)); i <= Math.min(caseX + (jeu.getAttaqueCourante().getZone()/2), jeu.getnColonnes()); i++) {
+                            for (int j =(Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)); j <= Math.min(caseX + (jeu.getAttaqueCourante().getZone()/2), jeu.getnLignes()); j++) {
+                                Personnage temp = jeu.getPerso(i, j);
                                 if (temp != null) {
                                     temp.appliquerEffets(jeu.getAttaqueCourante());
                                 }
@@ -46,6 +48,9 @@ public class PlateauMouseListener implements MouseListener {
                         }
                         jeu.getPersoAttaquant().setAttaqueFaite(true);
                         jeu.setAttaqueCourante(null);
+                        ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelAttaque().setText("");
+                        ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().attaqueEnabled(false);
+                        panelPlateau.setZoneCible(null);
                     }
                 }
             } else if(jeu.getPersoAttaquant().verifDeplacementValide(caseX, caseY, jeu) && !jeu.getPersoAttaquant().isDeplacementFait()){
@@ -55,13 +60,19 @@ public class PlateauMouseListener implements MouseListener {
             }
 
             if(jeu.getPersoAttaquant().isAttaqueFaite() && jeu.getPersoAttaquant().isDeplacementFait()){
+                jeu.getPersoAttaquant().setAttaqueFaite(false);
+                jeu.getPersoAttaquant().setDeplacementFait(false);
                 jeu.setPersoAttaquant(null);
                 jeu.setAttaqueCourante(null);
                 jeu.setJoueurCourant(jeu.getJoueurs().get((jeu.getJoueurs().indexOf(jeu.getJoueurCourant()) + 1) % jeu.getJoueurs().size()));
+                ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelJoueur().setText("Au tour de " + jeu.getJoueurCourant().getNom());
+                ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().updateActions(null, jeu);
+                ((MainFrame)panelPlateau.getTopLevelAncestor()).getPanelStat().updateStats(null);
+
+                panelPlateau.setCasesDeplacement(new LinkedList<Point>());
             }
         } else {
             Personnage temp = jeu.getPerso(caseX, caseY);
-            jeu.setPersoAttaquant(temp);
             if (temp != null) {
                 ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateStats(temp);
 
@@ -70,6 +81,7 @@ public class PlateauMouseListener implements MouseListener {
 
                 for (int i = 0; i < personnagesJouables.size(); i++) {
                     if (personnagesJouables.get(i) == temp) {
+                        jeu.setPersoAttaquant(temp);
                         isJouable = true;
                         break;
                     }
@@ -87,7 +99,7 @@ public class PlateauMouseListener implements MouseListener {
                     }
 
 
-                    ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateActions(temp);
+                    ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateActions(temp, jeu);
                 }
 
                 panelPlateau.setCasesDeplacement(deplacements);
@@ -115,5 +127,31 @@ public class PlateauMouseListener implements MouseListener {
     @Override
     public void mouseExited(MouseEvent e) {
 
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        Jeu jeu = ((MainFrame) panelPlateau.getTopLevelAncestor()).getJeu();
+        int tailleH = 700 / jeu.getnColonnes();
+        int tailleV = 550 / jeu.getnLignes();
+
+        int caseX = e.getX() / tailleH;
+        int caseY = e.getY() / tailleV;
+
+        if(jeu.getAttaqueCourante() != null){
+            int zone = jeu.getAttaqueCourante().getZone();
+
+            int caseXOrig = (Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)) * tailleH;
+            int caseYOrig = (Math.max(caseY -(jeu.getAttaqueCourante().getZone()/2), 0)) * tailleV;
+
+            panelPlateau.setZoneCible(caseXOrig , caseYOrig, (zone) * tailleH, (zone) * tailleV);
+
+            panelPlateau.repaint();
+        }
     }
 }
