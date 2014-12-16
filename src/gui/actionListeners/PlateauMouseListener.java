@@ -39,10 +39,15 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                     if ((caseX == jeu.getPersoAttaquant().getPositionX() && Math.abs(jeu.getPersoAttaquant().getPositionX() - caseX) <= jeu.getAttaqueCourante().getPortee())
                             || (caseY == jeu.getPersoAttaquant().getPositionY() && Math.abs(jeu.getPersoAttaquant().getPositionY() - caseY) <= jeu.getAttaqueCourante().getPortee())) {
                         for (int i = (Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)); i <= Math.min(caseX + (jeu.getAttaqueCourante().getZone()/2), jeu.getnColonnes()); i++) {
-                            for (int j =(Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)); j <= Math.min(caseX + (jeu.getAttaqueCourante().getZone()/2), jeu.getnLignes()); j++) {
+                            for (int j =(Math.max(caseY -(jeu.getAttaqueCourante().getZone()/2), 0)); j <= Math.min(caseY + (jeu.getAttaqueCourante().getZone()/2), jeu.getnLignes()); j++) {
                                 Personnage temp = jeu.getPerso(i, j);
                                 if (temp != null) {
-                                    temp.appliquerEffets(jeu.getAttaqueCourante());
+                                    jeu.attaquerCible(jeu.getAttaqueCourante(), temp);
+
+                                    if(jeu.getJoueurs().size() == 1){
+                                        ((MainFrame)panelPlateau.getTopLevelAncestor()).victory();
+                                        return;
+                                    }
                                 }
                             }
                         }
@@ -146,10 +151,21 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
         if(jeu.getAttaqueCourante() != null){
             int zone = jeu.getAttaqueCourante().getZone();
 
+            int tailleX = (zone) * tailleH;
+            int tailleY = (zone) * tailleV;
+
+            if((caseX -(jeu.getAttaqueCourante().getZone()/2)) < 0){
+                tailleX = (zone - 1) * tailleH;
+            }
+
+            if((caseY -(jeu.getAttaqueCourante().getZone()/2)) < 0){
+                tailleY = (zone - 1) * tailleV;
+            }
+
             int caseXOrig = (Math.max(caseX -(jeu.getAttaqueCourante().getZone()/2), 0)) * tailleH;
             int caseYOrig = (Math.max(caseY -(jeu.getAttaqueCourante().getZone()/2), 0)) * tailleV;
 
-            panelPlateau.setZoneCible(caseXOrig , caseYOrig, (zone) * tailleH, (zone) * tailleV);
+            panelPlateau.setZoneCible(caseXOrig , caseYOrig, tailleX, tailleY);
 
             panelPlateau.repaint();
         }

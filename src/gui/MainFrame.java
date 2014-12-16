@@ -19,11 +19,13 @@ public class MainFrame extends JFrame {
     private JPanel mainPanel;
     private JPanelPlateau panelPlateau;
     private JPanelStat panelStat;
+    private BatailleMenuBar menuBar;
 
     public MainFrame(String title) throws HeadlessException {
         super(title);
 
-        this.setJMenuBar(new BatailleMenuBar());
+        menuBar = new BatailleMenuBar();
+        this.setJMenuBar(menuBar);
 
         mainPanel = new JPanel();
         this.add(mainPanel);
@@ -97,5 +99,15 @@ public class MainFrame extends JFrame {
      */
     public static void main(String[] args){
         MainFrame frame = new MainFrame("Bataille Fantastique");
+    }
+
+    public void victory() {
+        JOptionPane.showMessageDialog(this, "Victoire de " + jeu.getJoueurCourant().getNom(), "Victoire", JOptionPane.INFORMATION_MESSAGE);
+
+        this.jeu = null;
+        this.mainPanel.removeAll();
+        this.menuBar.setNouveauJeuClicable(true);
+        this.mainPanel.updateUI();
+        this.setBounds(10, 10, 550, 550);
     }
 }

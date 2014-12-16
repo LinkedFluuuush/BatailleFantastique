@@ -24,7 +24,7 @@ public class NouveauJeuActionListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
-        final JDialog newGameDialog = new JDialog((JFrame) (this.theBar.getParent().getParent().getParent().getParent()), "Nouveau jeu", true);
+        final JDialog newGameDialog = new JDialog((JFrame) (this.theBar.getTopLevelAncestor()), "Nouveau jeu", true);
 
         newGameDialog.setLayout(new BoxLayout(newGameDialog.getContentPane(), BoxLayout.PAGE_AXIS));
 
@@ -57,7 +57,7 @@ public class NouveauJeuActionListener implements ActionListener {
                 j.addJoueur(new Joueur(textNameJ2.getText()));
 
                 j.setJoueurCourant(j.getJoueurs().get(r.nextInt(2)));
-                j.setnPersonnages(2);
+                j.setnPersonnages(1);
                 j.setnColonnes(10);
                 j.setnLignes(10);
 

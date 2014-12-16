@@ -18,6 +18,7 @@ public class Jeu {
     private Joueur joueurCourant;
 	private Attaque attaqueCourante;
 
+
     /**
      * Définit l'état du jeu. Permet à l'interface de savoir ou en est la partie
      * SELECTION : Sélection des personnages en cours
@@ -290,7 +291,20 @@ public class Jeu {
 	public void attaquerCible(Attaque attaque, Personnage persoCible) {
 		int effet; // effets de l'attaque
         persoCible.appliquerEffets(attaque);
-		
+
+        if(persoCible.getPv() == 0){
+            for(Joueur j : this.getJoueurs()){
+                if(j.getPersonnages().contains(persoCible)){
+                    j.getPersonnages().remove(persoCible);
+
+                    if(j.getPersonnages().size() == 0){
+                        this.getJoueurs().remove(j);
+                    }
+
+                    break;
+                }
+            }
+        }
 	}
 	
 	/** Déplace le personnage sélectionné (persoAttaquant)

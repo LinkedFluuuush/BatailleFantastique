@@ -122,6 +122,7 @@ public abstract class Personnage {
 			} else {
 				if (attaque.getEffet() >= protection){
 					pv = pv - attaque.getEffet() + protection;
+                    protection = 0;
 				} else {
 					protection -= attaque.getEffet();
 					// Le nombre de PV ne change pas car la protection absorbe les dégâts faits par l'attaque
