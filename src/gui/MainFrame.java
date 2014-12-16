@@ -75,12 +75,13 @@ public class MainFrame extends JFrame {
                 //Placement des personnages, à retirer sur l'itération 3
                 for(int i = 0; i < jeu.getJoueurs().size() ; i++){
                     for(int j = 0; j < jeu.getJoueurs().get(i).getPersonnages().size() ; j++){
-                        jeu.getJoueurs().get(i).getPersonnages().get(j).deplacerPerso(i,j);
+                        jeu.getJoueurs().get(i).getPersonnages().get(j).deplacerPerso(Math.max(i * jeu.getnColonnes() - 1, 0), j);
                     }
                 }
 
                 panelPlateau.repaint();
                 panelStat.interfaceJeu(this.getJeu());
+                mainPanel.updateUI();
                 break;
         }
     }

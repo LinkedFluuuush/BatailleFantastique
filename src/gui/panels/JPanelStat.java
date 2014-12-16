@@ -91,7 +91,17 @@ public class JPanelStat extends JPanel {
             p = persosIt.next();
             unPerso = new JPanel();
             unPerso.setLayout(new BoxLayout(unPerso, BoxLayout.PAGE_AXIS));
-            unPerso.add(new JLabel(p.getClass().toString()));
+            
+            if (p.getClass() == Mage.class) {
+                unPerso.add(new JLabel("Mage"));
+            } else if (p.getClass() == Voleur.class) {
+                unPerso.add(new JLabel("Voleur"));
+            } else if (p.getClass() == Guerrier.class) {
+                unPerso.add(new JLabel("Guerrier"));
+            } else if (p.getClass() == CavalierCeleste.class) {
+                unPerso.add(new JLabel("Cavalier Céleste"));
+            }
+
             unPerso.add(new JLabel(p.getNom()));
             unPerso.add(new JLabel(p.getAge() + " ans"));
             unPerso.setBorder(BorderFactory.createEtchedBorder());
@@ -104,9 +114,7 @@ public class JPanelStat extends JPanel {
         panelResumePerso = new JPanel();
         panelResumeActions = new JPanel();
 
-        panelResumePerso.setBorder(BorderFactory.createTitledBorder("Au tour de " + jeu.getJoueurCourant().getNom()));
-
-        this.updateUI();
+        panelResumePerso.setBorder(BorderFactory.createTitledBorder(""));
 
         panelResumePerso.setLayout(new BoxLayout(panelResumePerso, BoxLayout.PAGE_AXIS));
         panelResumeActions.setLayout(new BoxLayout(panelResumeActions, BoxLayout.PAGE_AXIS));
@@ -123,6 +131,10 @@ public class JPanelStat extends JPanel {
 
         labelAttaque = new JLabel();
         this.add(labelAttaque);
+
+        panelResumePerso.updateUI();
+        panelResumeActions.updateUI();
+        this.updateUI();
     }
 
     public void updateStats(Personnage perso) {
@@ -157,8 +169,14 @@ public class JPanelStat extends JPanel {
 
             labelNom.setText(perso.getNom());
             labelAge.setText(perso.getAge() + " ans");
-            labelStatut.setText("Statut : En vie");
-            labelDeplacement.setText("Déplacement : " + perso.getDeplacement() + " cases par tour");
+            if(perso.getMalusDeplacement() != 0) {
+                labelStatut.setText("Statut : Ralenti");
+            } else if(perso.getProtection() != 0) {
+                labelStatut.setText("Statut : Protégé");
+            } else {
+                labelStatut.setText("Statut : En vie");
+            }
+            labelDeplacement.setText("Déplacement : " + (perso.getDeplacement() - perso.getMalusDeplacement()) + " cases par tour");
             labelPV.setText("Vie : " + perso.getPv() + " PV");
         }
 

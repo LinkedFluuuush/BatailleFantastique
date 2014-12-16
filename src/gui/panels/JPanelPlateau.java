@@ -92,8 +92,22 @@ public class JPanelPlateau extends JPanel {
                     g.drawRect(i * tailleH, j * tailleV, tailleH - 1, tailleV - 1);
                 }
 
-                g.setColor(Color.BLACK);
-                g.drawString(type, i * tailleH + (tailleH/2), j * tailleV + (tailleV/2));
+                if(!type.equals("")){
+                    for(int nJoueur = 0; nJoueur <  jeu.getJoueurs().size(); nJoueur++){
+                        if(jeu.getJoueurs().get(nJoueur).getPersonnages().contains(temp)){
+                            if(nJoueur == 1){
+                                g.setColor(Color.BLUE);
+                            } else {
+                                g.setColor(Color.MAGENTA);
+                            }
+
+                            g.fillRect(i * tailleH, j * tailleV, tailleH, tailleV);
+                        }
+                    }
+
+                    g.setColor(Color.BLACK);
+                    g.drawString(type, i * tailleH + (tailleH/2), j * tailleV + (tailleV/2));
+                }
             }
             if(jeu.getnLignes() % 2 == 0){
                 color = !color;

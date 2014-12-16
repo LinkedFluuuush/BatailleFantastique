@@ -32,6 +32,6 @@ public class CavalierCeleste extends Personnage {
 		int deltaY = Math.abs(y - this.getPositionY()); // y - persoAttaquant.getPositionY() représente l'écart en ordonnée de la position courante à la cible
 		nbCasesParcourues += deltaX;
 		nbCasesParcourues += deltaY;
-		return((nbCasesParcourues <= this.deplacement) && j.getPerso(x,y) == null);
+		return((nbCasesParcourues <= this.deplacement - this.malusDeplacement) && j.getPerso(x,y) == null);
 	}
 }

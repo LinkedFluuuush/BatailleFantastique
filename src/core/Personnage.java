@@ -10,7 +10,7 @@ public abstract class Personnage {
 	private int positionY;
 	protected LinkedList<Attaque> attaques;
 	protected int deplacement;
-	private int malusDeplacement;
+	protected int malusDeplacement;
     protected int pv; // points de vie
 	protected boolean terrestre; // vaut vrai si le personnage est terrestre
 	private int protection; // protection dont le personnage peut bénéficier grâce à l'instinct d'esquive, par exemple
@@ -109,7 +109,15 @@ public abstract class Personnage {
 		this.deplacementFait = deplacementFait;
 	}
 
-	/** Modifie le nombre de points de vie du personnage
+    public int getMalusDeplacement() {
+        return malusDeplacement;
+    }
+
+    public int getProtection(){
+        return  protection;
+    }
+
+    /** Modifie le nombre de points de vie du personnage
 	 * @param attaque effet d'une attaque subie
 	 */
 	public void appliquerEffets(Attaque attaque){
@@ -139,6 +147,7 @@ public abstract class Personnage {
 	public void deplacerPerso(int x, int y){
 		positionX = x;
 		positionY = y;
+        malusDeplacement = 0;
 	}
 	
 	/** Vérifie si le déplacement voulu est valide

@@ -27,6 +27,6 @@ public class Guerrier extends Personnage {
         int deltaY = Math.abs(y - this.getPositionY()); // y - persoAttaquant.getPositionY() représente l'écart en ordonnée de la position courante à la cible
         nbCasesParcourues += deltaX;
         nbCasesParcourues += deltaY;
-        return(directionValide && (nbCasesParcourues <= this.deplacement) && j.getPerso(x,y) == null);
+        return(directionValide && (nbCasesParcourues <= this.deplacement - this.malusDeplacement) && j.getPerso(x,y) == null);
     }
 }
