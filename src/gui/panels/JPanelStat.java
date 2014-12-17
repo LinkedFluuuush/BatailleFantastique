@@ -263,8 +263,10 @@ public class JPanelStat extends JPanel {
 
     public void interfacePlacement(final Jeu jeu) {
         panelResumePerso = new JPanel();
+        labelError = new JLabel();
 
         this.add(panelResumePerso);
+        this.add(labelError);
 
         this.updateUI();
     }
@@ -299,6 +301,8 @@ public class JPanelStat extends JPanel {
                 panelResumePerso.add(unPerso);
             }
         }
+
+        labelError.setText("");
 
         this.updateUI();
     }

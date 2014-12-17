@@ -369,12 +369,9 @@ public class Jeu {
 	 * @return estDansZone booléen valant vrai si le personnage est dans la zone de départ de son côté du plateau
 	 */
     public boolean estDansZoneDepart(int x, int y){
-    	System.out.println("-1");
-    	if(joueurs.indexOf(joueurCourant) == 1) { // Si le joueur courant est le joueur 1, il doit passer ses personnages à gauche
-    		System.out.println("0");
-    		return(x<=tailleZoneDepart);
+    	if(joueurs.indexOf(joueurCourant) == 0) { // Si le joueur courant est le joueur 1, il doit passer ses personnages à gauche
+    		return(x<=tailleZoneDepart - 1);
     	} else {
-    		System.out.println("1");
     		return(x>=(nColonnes - tailleZoneDepart)); // Si le joueur courant est le joueur 2, il doit passer ses personnages à droite
     	}
     }
@@ -384,11 +381,13 @@ public class Jeu {
 	 * @param x abscisse de la case cible
 	 * @param y ordonnée de la case cible
 	 */
-    public void placePerso(Personnage persoAPlacer, int x, int y){
+    public boolean placePerso(Personnage persoAPlacer, int x, int y){
     	if((getPerso(x,y) == null) && estDansZoneDepart(x,y)){
-    		System.out.println("2");
     		persoAPlacer.nouvelleCase(x,y);
-    	}
+			return true;
+    	} else {
+			return false;
+		}
     }
     
     /** Vérifie que la taille de l'équipe est bien valide
@@ -410,6 +409,6 @@ public class Jeu {
 	 * @param n nombre de rangées proposées pour le départ
 	 */
     public boolean validerTailleZoneDepart(int n){
-    	return((n>=2) && (n < nColonnes/2));
+    	return((n>=2) && (n <= nColonnes/2));
     }
 }

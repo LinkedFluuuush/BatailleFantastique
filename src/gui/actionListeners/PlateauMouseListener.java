@@ -118,23 +118,26 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
         } else if (jeu.getEtatCourant() == Jeu.Etat.PLACEMENT){
             if(jeu.getPersoAttaquant() != null){
                 boolean resteAPlacer = false;
-                // TODO : remplacer deplacerPerso par placePerso ? D'autres modifs à faire, mais là ce n'est pas la méthode adaptée qui est utilisée.
-                jeu.getPersoAttaquant().deplacerPerso(caseX, caseY);
-                jeu.setJoueurCourant(jeu.getJoueurs().get((jeu.getJoueurs().indexOf(jeu.getJoueurCourant()) + 1) % jeu.getJoueurs().size()));
+//                jeu.getPersoAttaquant().deplacerPerso(caseX, caseY);
+                if(jeu.placePerso(jeu.getPersoAttaquant(), caseX, caseY)) {
+                    jeu.setJoueurCourant(jeu.getJoueurs().get((jeu.getJoueurs().indexOf(jeu.getJoueurCourant()) + 1) % jeu.getJoueurs().size()));
 
-                for(Personnage p : jeu.getJoueurCourant().getPersonnages()){
-                    if(p.getPositionX() == -1){
-                        resteAPlacer = true;
-                        break;
+                    for (Personnage p : jeu.getJoueurCourant().getPersonnages()) {
+                        if (p.getPositionX() == -1) {
+                            resteAPlacer = true;
+                            break;
+                        }
                     }
-                }
 
-                if(resteAPlacer) {
-                    ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updatePlacement(jeu.getJoueurCourant());
+                    if (resteAPlacer) {
+                        ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updatePlacement(jeu.getJoueurCourant());
+                    } else {
+                        jeu.setPersoAttaquant(null);
+                        jeu.setEtatCourant(Jeu.Etat.ENCOURS);
+                        ((MainFrame) panelPlateau.getTopLevelAncestor()).updateFromState();
+                    }
                 } else {
-                    jeu.setPersoAttaquant(null);
-                    jeu.setEtatCourant(Jeu.Etat.ENCOURS);
-                    ((MainFrame) panelPlateau.getTopLevelAncestor()).updateFromState();
+                    ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelError().setText("<html><font color=#FF0000>Ajoutez le personnage dans votre zone, sur une case vide</font></html>");
                 }
             }
         }
