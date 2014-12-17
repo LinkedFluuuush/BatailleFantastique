@@ -81,7 +81,44 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
 
                     panelPlateau.setCasesDeplacement(new LinkedList<Point>());
                 }
+
+                if (!jeu.getPersoAttaquant().isDeplacementFait() && jeu.getAttaqueCourante() == null) {
+                    jeu.setPersoAttaquant(null);
+                    Personnage temp = jeu.getPerso(caseX, caseY);
+                    if (temp != null) {
+                        ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateStats(temp);
+
+                        LinkedList<Personnage> personnagesJouables = jeu.getJoueurCourant().getPersonnages();
+                        boolean isJouable = false;
+
+                        for (int i = 0; i < personnagesJouables.size(); i++) {
+                            if (personnagesJouables.get(i) == temp) {
+                                jeu.setPersoAttaquant(temp);
+                                isJouable = true;
+                                break;
+                            }
+                        }
+
+                        LinkedList<Point> deplacements = new LinkedList<Point>();
+
+                        if (isJouable) {
+                            for (int i = 0; i < jeu.getnColonnes(); i++) {
+                                for (int j = 0; j < jeu.getnLignes(); j++) {
+                                    if (temp.verifDeplacementValide(i, j, jeu)) {
+                                        deplacements.add(new Point(i, j));
+                                    }
+                                }
+                            }
+
+
+                            ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateActions(temp, jeu);
+                        }
+
+                        panelPlateau.setCasesDeplacement(deplacements);
+                    }
+                }
             } else {
+                jeu.setPersoAttaquant(null);
                 Personnage temp = jeu.getPerso(caseX, caseY);
                 if (temp != null) {
                     ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateStats(temp);
