@@ -96,7 +96,7 @@ public class JPanelPlateau extends JPanel {
                     for(int nJoueur = 0; nJoueur <  jeu.getJoueurs().size(); nJoueur++){
                         if(jeu.getJoueurs().get(nJoueur).getPersonnages().contains(temp)){
                             if(nJoueur == 1){
-                                g.setColor(Color.BLUE);
+                                g.setColor(Color.CYAN);
                             } else {
                                 g.setColor(Color.MAGENTA);
                             }

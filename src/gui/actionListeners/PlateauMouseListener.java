@@ -36,8 +36,8 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
             if (jeu.getPersoAttaquant() != null) {
                 if (jeu.getAttaqueCourante() != null) {
                     if (jeu.getPersoAttaquant().getnAttaquesRestantes() != 0) {
-                        if ((caseX == jeu.getPersoAttaquant().getPositionX() && Math.abs(jeu.getPersoAttaquant().getPositionX() - caseX) <= jeu.getAttaqueCourante().getPortee())
-                                || (caseY == jeu.getPersoAttaquant().getPositionY() && Math.abs(jeu.getPersoAttaquant().getPositionY() - caseY) <= jeu.getAttaqueCourante().getPortee())) {
+                        if ((caseX == jeu.getPersoAttaquant().getPositionX() && Math.abs(jeu.getPersoAttaquant().getPositionY() - caseY) <= jeu.getAttaqueCourante().getPortee())
+                                || (caseY == jeu.getPersoAttaquant().getPositionY() && Math.abs(jeu.getPersoAttaquant().getPositionX() - caseX) <= jeu.getAttaqueCourante().getPortee())) {
                             for (int i = (Math.max(caseX - (jeu.getAttaqueCourante().getZone() / 2), 0)); i <= Math.min(caseX + (jeu.getAttaqueCourante().getZone() / 2), jeu.getnColonnes()); i++) {
                                 for (int j = (Math.max(caseY - (jeu.getAttaqueCourante().getZone() / 2), 0)); j <= Math.min(caseY + (jeu.getAttaqueCourante().getZone() / 2), jeu.getnLignes()); j++) {
                                     Personnage temp = jeu.getPerso(i, j);

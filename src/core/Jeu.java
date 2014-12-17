@@ -310,7 +310,6 @@ public class Jeu {
 	 * @param persoCible personnage cible de l'attaquée
 	 */
 	public void attaquerCible(Attaque attaque, Personnage persoCible) {
-		int effet; // effets de l'attaque
         persoCible.appliquerEffets(attaque);
 
         if(persoCible.getPv() <= 0){
