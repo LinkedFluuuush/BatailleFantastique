@@ -5,6 +5,7 @@ import gui.MainFrame;
 import gui.actionListeners.AddPersonnageActionListener;
 import gui.actionListeners.FinTourActionListener;
 import gui.actionListeners.SelectAttaqueActionListener;
+import gui.actionListeners.SelectPersoMouseListener;
 
 import javax.swing.*;
 import java.awt.*;
@@ -258,5 +259,47 @@ public class JPanelStat extends JPanel {
                 c.setEnabled(b);
             }
         }
+    }
+
+    public void interfacePlacement(final Jeu jeu) {
+        panelResumePerso = new JPanel();
+
+        this.add(panelResumePerso);
+
+        this.updateUI();
+    }
+
+    public void updatePlacement(Joueur joueur){
+        panelResumePerso.removeAll();
+        JPanel unPerso;
+
+        for(Personnage p : joueur.getPersonnages()){
+            if(p.getPositionX() == -1) {
+
+                unPerso = new JPanel();
+                unPerso.setLayout(new BoxLayout(unPerso, BoxLayout.PAGE_AXIS));
+
+                if (p.getClass() == Mage.class) {
+                    unPerso.add(new JLabel("Mage"));
+                } else if (p.getClass() == Voleur.class) {
+                    unPerso.add(new JLabel("Voleur"));
+                } else if (p.getClass() == Guerrier.class) {
+                    unPerso.add(new JLabel("Guerrier"));
+                } else if (p.getClass() == CavalierCeleste.class) {
+                    unPerso.add(new JLabel("Cavalier Céleste"));
+                }
+
+                unPerso.add(new JLabel(p.getNom()));
+                unPerso.add(new JLabel(p.getAge() + " ans"));
+                unPerso.setBorder(BorderFactory.createEtchedBorder());
+
+//                unPerso.addActionListener(new SelectPersoMouseListener(((MainFrame) this.getTopLevelAncestor()).getJeu(), p, unPerso, panelResumePerso));
+                unPerso.addMouseListener(new SelectPersoMouseListener(((MainFrame) this.getTopLevelAncestor()).getJeu(), p, unPerso, panelResumePerso));
+
+                panelResumePerso.add(unPerso);
+            }
+        }
+
+        this.updateUI();
     }
 }

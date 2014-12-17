@@ -48,8 +48,9 @@ public class AddPersonnageActionListener implements ActionListener {
                                 if(jeu.getJoueurCourant().getPersonnages().size() == 0){
                                     panelStat.getPanelSelection().setBorder(BorderFactory.createTitledBorder("Sélection d'équipe - " + jeu.getJoueurCourant().getNom()));
                                 } else {
-                                    jeu.setEtatCourant(Jeu.Etat.ENCOURS);
+                                    jeu.setEtatCourant(Jeu.Etat.PLACEMENT);
                                     ((MainFrame) panelStat.getTopLevelAncestor()).updateFromState();
+                                    return;
                                 }
                                 break;
                             }

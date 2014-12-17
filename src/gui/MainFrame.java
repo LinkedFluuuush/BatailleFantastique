@@ -68,22 +68,27 @@ public class MainFrame extends JFrame {
                 break;
             case PLACEMENT:
                 panelStat.removeAll();
+                panelStat.interfacePlacement(this.getJeu());
+                panelStat.updatePlacement(this.getJeu().getJoueurCourant());
                 break;
             case ENCOURS:
                 panelStat.removeAll();
 
+/*
                 //Placement des personnages, à retirer sur l'itération 3
                 for(int i = 0; i < jeu.getJoueurs().size() ; i++){
                     for(int j = 0; j < jeu.getJoueurs().get(i).getPersonnages().size() ; j++){
                         jeu.getJoueurs().get(i).getPersonnages().get(j).deplacerPerso(Math.max(i * jeu.getnColonnes() - 1, 0), j);
                     }
                 }
+*/
 
-                panelPlateau.repaint();
                 panelStat.interfaceJeu(this.getJeu());
-                mainPanel.updateUI();
                 break;
         }
+
+        panelPlateau.repaint();
+        mainPanel.updateUI();
     }
 
     public JPanelPlateau getPanelPlateau() {
@@ -94,14 +99,6 @@ public class MainFrame extends JFrame {
         return panelStat;
     }
 
-    /**
-     * Méthode de lancement de l'application
-     * @param args arguments de lancement
-     */
-    public static void main(String[] args){
-        MainFrame frame = new MainFrame("Bataille Fantastique");
-    }
-
     public void victory() {
         JOptionPane.showMessageDialog(this, "Victoire de " + jeu.getJoueurCourant().getNom(), "Victoire", JOptionPane.INFORMATION_MESSAGE);
 
@@ -110,5 +107,13 @@ public class MainFrame extends JFrame {
         this.menuBar.setNouveauJeuClicable(true);
         this.mainPanel.updateUI();
         this.setBounds(10, 10, 550, 550);
+    }
+    
+    /**
+     * Méthode de lancement de l'application
+     * @param args arguments de lancement
+     */
+    public static void main(String[] args){
+        MainFrame frame = new MainFrame("Bataille Fantastique");
     }
 }

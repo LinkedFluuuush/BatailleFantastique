@@ -196,7 +196,7 @@ public class Jeu {
 	 * @param x abscisse de la case sélectionnée
 	 * @param y ordonnées de la case sélectionnée
 	 * @return perso le personnage choisi par le joueur
-	 */
+	 *//*
 	public Object choixCase(int x, int y){
 		// Pour stocker les résultats
 		LinkedList<Attaque> attaques;
@@ -208,7 +208,7 @@ public class Jeu {
 		res[1] = attaques;
 		res[2] = deplacement;
 		return res;
-	}
+	}*/
 	
 	/** Renvoie les cibles possibles du personnage attaquant
 	 * @param nomAttaque nom de l'attaque lancée par le personnage attaquant
@@ -292,7 +292,7 @@ public class Jeu {
 		int effet; // effets de l'attaque
         persoCible.appliquerEffets(attaque);
 
-        if(persoCible.getPv() == 0){
+        if(persoCible.getPv() <= 0){
             for(Joueur j : this.getJoueurs()){
                 if(j.getPersonnages().contains(persoCible)){
                     j.getPersonnages().remove(persoCible);
