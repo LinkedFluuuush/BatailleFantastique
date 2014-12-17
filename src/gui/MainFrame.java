@@ -108,12 +108,4 @@ public class MainFrame extends JFrame {
         this.mainPanel.updateUI();
         this.setBounds(10, 10, 550, 550);
     }
-    
-    /**
-     * Méthode de lancement de l'application
-     * @param args arguments de lancement
-     */
-    public static void main(String[] args){
-        MainFrame frame = new MainFrame("Bataille Fantastique");
-    }
 }

@@ -132,6 +132,7 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                 if(resteAPlacer) {
                     ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updatePlacement(jeu.getJoueurCourant());
                 } else {
+                    jeu.setPersoAttaquant(null);
                     jeu.setEtatCourant(Jeu.Etat.ENCOURS);
                     ((MainFrame) panelPlateau.getTopLevelAncestor()).updateFromState();
                 }

@@ -126,7 +126,6 @@ public class NouveauJeuActionListener implements ActionListener {
 				                    j.setnLignes(verticalBoardSize);
 				                    if(j.validerTailleZoneDepart(zoneSize)){
 				                    	bonneTailleZoneDepart = true;
-				                    	System.out.println(zoneSize);
 				                    	j.setTailleZoneDepart(zoneSize);
 					                    ((MainFrame) theBar.getTopLevelAncestor()).setJeu(j);
 				                        theBar.setNouveauJeuClicable(false);
