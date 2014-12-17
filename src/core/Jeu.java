@@ -45,6 +45,11 @@ public class Jeu {
      * Définit le nombre de lignes de la carte
      */
     private int nLignes;
+    
+    /**
+     * Définit la taille de la zone de départ en nombre de colonnes
+     */
+    private int tailleZoneDepart;
 
     /**
 	 * @param persoAttaquant
@@ -173,6 +178,22 @@ public class Jeu {
         this.nLignes = nLignes;
     }
 
+    /**
+    *
+    * @return La taille de la zone
+    */
+   public int getTailleZoneDepart() {
+       return tailleZoneDepart;
+   }
+
+   /**
+    *
+    * @param tailleZoneDepart la nouvelle taille de zone de départ
+    */
+   public void setTailleZoneDepart(int tailleZoneDepart) {
+       this.tailleZoneDepart = tailleZoneDepart;
+   }
+    
 	public Attaque getAttaqueCourante() {
 		return attaqueCourante;
 	}
@@ -342,13 +363,30 @@ public class Jeu {
     	return joueurCourant.getPersonnages().get(i);
     }
     
+    /** Teste si une position est dans la zone de placement initial des persoonages
+	 * @param x abscisse de la case cible
+	 * @param y ordonnée de la case cible
+	 * @return estDansZone booléen valant vrai si le personnage est dans la zone de départ de son côté du plateau
+	 */
+    public boolean estDansZoneDepart(int x, int y){
+    	System.out.println("-1");
+    	if(joueurs.indexOf(joueurCourant) == 1) { // Si le joueur courant est le joueur 1, il doit passer ses personnages à gauche
+    		System.out.println("0");
+    		return(x<=tailleZoneDepart);
+    	} else {
+    		System.out.println("1");
+    		return(x>=(nColonnes - tailleZoneDepart)); // Si le joueur courant est le joueur 2, il doit passer ses personnages à droite
+    	}
+    }
+    
     /** Place un personnage sur le plateau
 	 * @param persoAPlacer personnage à placer
 	 * @param x abscisse de la case cible
 	 * @param y ordonnée de la case cible
 	 */
     public void placePerso(Personnage persoAPlacer, int x, int y){
-    	if(getPerso(x,y) == null){
+    	if((getPerso(x,y) == null) && estDansZoneDepart(x,y)){
+    		System.out.println("2");
     		persoAPlacer.nouvelleCase(x,y);
     	}
     }
@@ -371,7 +409,7 @@ public class Jeu {
     /** Vérifie que la taille de la zone de départ est bien valide
 	 * @param n nombre de rangées proposées pour le départ
 	 */
-    public boolean validerTailleZoneDepart(int n, int m){
+    public boolean validerTailleZoneDepart(int n){
     	return((n>=2) && (n < nColonnes/2));
     }
 }

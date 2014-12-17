@@ -118,6 +118,7 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
         } else if (jeu.getEtatCourant() == Jeu.Etat.PLACEMENT){
             if(jeu.getPersoAttaquant() != null){
                 boolean resteAPlacer = false;
+                // TODO : remplacer deplacerPerso par placePerso ? D'autres modifs à faire, mais là ce n'est pas la méthode adaptée qui est utilisée.
                 jeu.getPersoAttaquant().deplacerPerso(caseX, caseY);
                 jeu.setJoueurCourant(jeu.getJoueurs().get((jeu.getJoueurs().indexOf(jeu.getJoueurCourant()) + 1) % jeu.getJoueurs().size()));
 
