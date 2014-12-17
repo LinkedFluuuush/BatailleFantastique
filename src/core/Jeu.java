@@ -357,7 +357,7 @@ public class Jeu {
 	 * @param n taille d'équipe proposée
 	 */
     public boolean validerTailleEquipe(int n){
-    	return((n-5)*(n-1)<0); // Condition équivalente à "n<5 et n>1"
+    	return((n-5)*(n-1)<=0); // Condition équivalente à "n<5 et n>1"
     }
     
     /** Vérifie que la taille du plateau est bien valide

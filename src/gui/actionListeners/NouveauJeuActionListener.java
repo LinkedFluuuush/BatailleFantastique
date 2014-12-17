@@ -13,7 +13,7 @@ import java.util.Random;
 
 /**
  * Created by Jean-Baptiste Louvet on 03/12/14.
- * Action Listener pourla création d'un nouveau jeu
+ * Action Listener pour la création d'un nouveau jeu
  */
 public class NouveauJeuActionListener implements ActionListener {
     final protected BatailleMenuBar theBar;
@@ -42,30 +42,100 @@ public class NouveauJeuActionListener implements ActionListener {
         final JTextField textNameJ2 = new JTextField(15);
         panelJ2.add(textNameJ2);
 
-        JButton buttonOK = new JButton("OK");
+        JButton buttonOK1 = new JButton("OK");
 
         newGameDialog.add(panelJ1);
         newGameDialog.add(panelJ2);
-        newGameDialog.add(buttonOK);
-
-        buttonOK.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent actionEvent) {
+        newGameDialog.add(buttonOK1);
+        
+        buttonOK1.addActionListener(new ActionListener(){
+        	@Override
+        	public void actionPerformed(ActionEvent actionEvent) {
+        		
                 Random r = new Random();
-                Jeu j = new Jeu();
+                final Jeu j = new Jeu();
                 j.addJoueur(new Joueur(textNameJ1.getText()));
                 j.addJoueur(new Joueur(textNameJ2.getText()));
 
                 j.setJoueurCourant(j.getJoueurs().get(r.nextInt(2)));
-                j.setnPersonnages(1);
-                j.setnColonnes(10);
-                j.setnLignes(10);
+        		
+        		newGameDialog.dispose();
 
-                ((MainFrame) theBar.getTopLevelAncestor()).setJeu(j);
-                theBar.setNouveauJeuClicable(false);
-
-                newGameDialog.dispose();
-            }
+        		final JDialog parametersDialog = new JDialog();
+        		parametersDialog.setLayout(new BoxLayout(parametersDialog.getContentPane(), BoxLayout.PAGE_AXIS));
+        		
+        		JPanel panelTeamSize = new JPanel();
+        		panelTeamSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		
+        		JPanel panelHorizontalBoardSize = new JPanel();
+        		panelHorizontalBoardSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		
+        		JPanel panelVerticalBoardSize = new JPanel();
+        		panelVerticalBoardSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		
+        		JPanel panelZoneSize = new JPanel();
+        		panelZoneSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		
+        		panelTeamSize.add(new JLabel("Sélectionnez une taille d'équipe"));
+                final JTextField textTeamSize = new JTextField(15);
+                panelTeamSize.add(textTeamSize);
+                
+                panelHorizontalBoardSize.add(new JLabel("Sélectionnez une taille horizontale pour le plateau"));
+                final JTextField textHorizontalBoardSize = new JTextField(15);
+                panelHorizontalBoardSize.add(textHorizontalBoardSize);
+                
+                panelVerticalBoardSize.add(new JLabel("Sélectionnez une taille verticale pour le plateau"));
+                final JTextField textVerticalBoardSize = new JTextField(15);
+                panelVerticalBoardSize.add(textVerticalBoardSize);
+                
+                panelZoneSize.add(new JLabel("Sélectionnez le nombre de rangées de départ"));
+                final JTextField textZoneSize = new JTextField(15);
+                panelZoneSize.add(textZoneSize);
+                
+                JButton buttonOK2 = new JButton("OK");
+                
+                parametersDialog.add(panelTeamSize);
+                parametersDialog.add(panelHorizontalBoardSize);
+                parametersDialog.add(panelVerticalBoardSize);
+                parametersDialog.add(panelZoneSize);
+                parametersDialog.add(buttonOK2);
+                
+                parametersDialog.setSize(400, 300);
+                parametersDialog.setVisible(true);
+                
+                buttonOK2.addActionListener(new ActionListener() {
+	                    @Override
+	                    public void actionPerformed(ActionEvent actionEvent) {
+	                    	int teamSize = Integer.parseInt(textTeamSize.getText());
+	                    	int horizontalBoardSize = Integer.parseInt(textHorizontalBoardSize.getText());
+	                    	int verticalBoardSize = Integer.parseInt(textVerticalBoardSize.getText());
+	                    	
+	                    	boolean bonneTailleEquipe = true;
+	                    	boolean bonneTaillePlateau = true;
+	                    	
+	                    	if(j.validerTailleEquipe(teamSize)){
+	                    		bonneTailleEquipe = true;
+	                    		j.setnPersonnages(teamSize);
+	                    		if(j.validerTaillePlateau(horizontalBoardSize, verticalBoardSize)){
+	                    			bonneTaillePlateau = true;
+	                    			j.setnColonnes(horizontalBoardSize);
+				                    j.setnLignes(verticalBoardSize);
+				                    ((MainFrame) theBar.getTopLevelAncestor()).setJeu(j);
+			                        theBar.setNouveauJeuClicable(false);
+	                    		} else {
+	                    			bonneTaillePlateau = false;
+	                    		}
+	                    	} else {
+	                    		bonneTailleEquipe = false;
+	                    	}
+	
+	                        if(bonneTailleEquipe && bonneTaillePlateau){
+	                        	parametersDialog.dispose();
+	                        }
+	                    }
+	                });
+                
+          }
         });
 
         newGameDialog.setSize(275, 200);
