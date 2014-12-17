@@ -99,14 +99,6 @@ public class MainFrame extends JFrame {
         return panelStat;
     }
 
-    /**
-     * Méthode de lancement de l'application
-     * @param args arguments de lancement
-     */
-    public static void main(String[] args){
-        MainFrame frame = new MainFrame("Bataille Fantastique");
-    }
-
     public void victory() {
         JOptionPane.showMessageDialog(this, "Victoire de " + jeu.getJoueurCourant().getNom(), "Victoire", JOptionPane.INFORMATION_MESSAGE);
 
