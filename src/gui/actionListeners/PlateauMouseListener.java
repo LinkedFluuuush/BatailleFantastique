@@ -82,7 +82,7 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                     panelPlateau.setCasesDeplacement(new LinkedList<Point>());
                 }
 
-                if (!jeu.getPersoAttaquant().isDeplacementFait() && jeu.getAttaqueCourante() == null) {
+                if (jeu.getPersoAttaquant() != null && !jeu.getPersoAttaquant().isDeplacementFait() && jeu.getAttaqueCourante() == null) {
                     jeu.setPersoAttaquant(null);
                     Personnage temp = jeu.getPerso(caseX, caseY);
                     if (temp != null) {

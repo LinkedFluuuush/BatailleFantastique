@@ -41,8 +41,9 @@ public class JPanelStat extends JPanel {
     private JLabel labelJoueur;
 
     public JPanelStat(){
-        this.setPreferredSize(new Dimension(300, 550));
         this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+        this.setSize(new Dimension(300, 400));
+        this.setPreferredSize(new Dimension(300, 400));
     }
 
     public void interfaceSelection(Jeu jeu) {
@@ -262,6 +263,8 @@ public class JPanelStat extends JPanel {
     }
 
     public void interfacePlacement(final Jeu jeu) {
+        this.removeAll();
+
         panelResumePerso = new JPanel();
         labelError = new JLabel();
 

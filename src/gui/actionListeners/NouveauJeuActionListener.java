@@ -22,9 +22,6 @@ public class NouveauJeuActionListener implements ActionListener {
         this.theBar = bar;
     }
 
-    String msgErreurTailleEquipe = new String("");
-	String msgErreurTaillePlateau = new String("");
-	String msgErreurTailleZone = new String("");
     @Override
     public void actionPerformed(ActionEvent actionEvent) {
         final JDialog newGameDialog = new JDialog((JFrame) (this.theBar.getTopLevelAncestor()), "Nouveau jeu", true);
@@ -56,6 +53,10 @@ public class NouveauJeuActionListener implements ActionListener {
         	public void actionPerformed(ActionEvent actionEvent) {  		
                 Random r = new Random();
                 final Jeu j = new Jeu();
+				final JLabel labelErreurTeamSize = new JLabel();
+				final JLabel labelErreurBoardSize = new JLabel();
+				final JLabel labelErreurZoneSize = new JLabel();
+
                 j.addJoueur(new Joueur(textNameJ1.getText()));
                 j.addJoueur(new Joueur(textNameJ2.getText()));
 
@@ -67,33 +68,36 @@ public class NouveauJeuActionListener implements ActionListener {
         		parametersDialog.setLayout(new BoxLayout(parametersDialog.getContentPane(), BoxLayout.PAGE_AXIS));
         		
         		final JPanel panelTeamSize = new JPanel();
-        		panelTeamSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		panelTeamSize.setLayout(new BoxLayout(panelTeamSize, BoxLayout.PAGE_AXIS));
         		
         		final JPanel panelHorizontalBoardSize = new JPanel();
-        		panelHorizontalBoardSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		panelHorizontalBoardSize.setLayout(new BoxLayout(panelHorizontalBoardSize, BoxLayout.PAGE_AXIS));
         		
         		final JPanel panelVerticalBoardSize = new JPanel();
-        		panelVerticalBoardSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
-        		
+        		panelVerticalBoardSize.setLayout(new BoxLayout(panelVerticalBoardSize,BoxLayout.PAGE_AXIS));
+
         		final JPanel panelZoneSize = new JPanel();
-        		panelZoneSize.setLayout(new FlowLayout(FlowLayout.LEFT, 15, 5));
+        		panelZoneSize.setLayout(new BoxLayout(panelZoneSize,BoxLayout.PAGE_AXIS));
         		
         		panelTeamSize.add(new JLabel("Sélectionnez une taille d'équipe"));
                 final JTextField textTeamSize = new JTextField(15);
                 panelTeamSize.add(textTeamSize);
-                
-                panelHorizontalBoardSize.add(new JLabel("Sélectionnez une taille horizontale pour le plateau" + msgErreurTaillePlateau));
+                panelTeamSize.add(labelErreurTeamSize);
+
+                panelHorizontalBoardSize.add(new JLabel("Sélectionnez une taille horizontale pour le plateau"));
                 final JTextField textHorizontalBoardSize = new JTextField(15);
                 panelHorizontalBoardSize.add(textHorizontalBoardSize);
                 
-                panelVerticalBoardSize.add(new JLabel("Sélectionnez une taille verticale pour le plateau" + msgErreurTailleZone));
+                panelVerticalBoardSize.add(new JLabel("Sélectionnez une taille verticale pour le plateau"));
                 final JTextField textVerticalBoardSize = new JTextField(15);
                 panelVerticalBoardSize.add(textVerticalBoardSize);
-                
-                panelZoneSize.add(new JLabel("Sélectionnez le nombre de rangées de départ"));
+                panelVerticalBoardSize.add(labelErreurBoardSize);
+
+                panelZoneSize.add(new JLabel("Sélectionnez le nombre de rangées pour le placement des personnages"));
                 final JTextField textZoneSize = new JTextField(15);
                 panelZoneSize.add(textZoneSize);
-                
+                panelZoneSize.add(labelErreurZoneSize);
+
                 JButton buttonOK2 = new JButton("OK");
                 
                 parametersDialog.add(panelTeamSize);
@@ -102,49 +106,71 @@ public class NouveauJeuActionListener implements ActionListener {
                 parametersDialog.add(panelZoneSize);
                 parametersDialog.add(buttonOK2);
                 
-                parametersDialog.setSize(400, 300);
+                parametersDialog.setSize(450,300);
                 parametersDialog.setVisible(true);
                 
                 buttonOK2.addActionListener(new ActionListener() {
 	                    @Override
 	                    public void actionPerformed(ActionEvent actionEvent) {
-	                    	int teamSize = Integer.parseInt(textTeamSize.getText());
-	                    	int horizontalBoardSize = Integer.parseInt(textHorizontalBoardSize.getText());
-	                    	int verticalBoardSize = Integer.parseInt(textVerticalBoardSize.getText());
-	                    	int zoneSize = Integer.parseInt(textZoneSize.getText());
-	                    	
-	                    	boolean bonneTailleEquipe = true;
-	                    	boolean bonneTaillePlateau = true;
-	                    	boolean bonneTailleZoneDepart = true;
-	                    	
-	                    	if(j.validerTailleEquipe(teamSize)){
-	                    		bonneTailleEquipe = true;
-	                    		j.setnPersonnages(teamSize);
-	                    		if(j.validerTaillePlateau(horizontalBoardSize, verticalBoardSize)){
-	                    			bonneTaillePlateau = true;
-	                    			j.setnColonnes(horizontalBoardSize);
-				                    j.setnLignes(verticalBoardSize);
-				                    if(j.validerTailleZoneDepart(zoneSize)){
-				                    	bonneTailleZoneDepart = true;
-				                    	j.setTailleZoneDepart(zoneSize);
-					                    ((MainFrame) theBar.getTopLevelAncestor()).setJeu(j);
-				                        theBar.setNouveauJeuClicable(false);
-				                    } else {
-				                    	bonneTailleZoneDepart = false;
-				                    	msgErreurTailleZone = "\n La zone de départ ne doit pas être plus grande que la moitié du plateau !";
-				                    	panelTeamSize.add(new JLabel(msgErreurTailleEquipe));
-				                    }
-	                    		} else {
-	                    			bonneTaillePlateau = false;
-	                    			msgErreurTaillePlateau = "\n Le plateau doit faire au moins 5 cases de côté !";
-	                    		}
-	                    	} else {
-	                    		bonneTailleEquipe = false;
-	                    		msgErreurTailleEquipe = "\n L'équipe doit avoir entre 1 et 5 combattants !";
-	                    	}
-	
-	                        if(bonneTailleEquipe && bonneTaillePlateau){
-	                        	parametersDialog.dispose();
+							int teamSize;
+							int horizontalBoardSize;
+							int verticalBoardSize;
+							int zoneSize;
+
+							boolean bonneTailleEquipe = false;
+							boolean bonneTaillePlateau = false;
+							boolean bonneTailleZoneDepart = false;
+
+
+							try {
+								teamSize = Integer.parseInt(textTeamSize.getText());
+								if(j.validerTailleEquipe(teamSize)) {
+									bonneTailleEquipe = true;
+									j.setnPersonnages(teamSize);
+									labelErreurTeamSize.setText("");
+								} else {
+									bonneTailleEquipe = false;
+									labelErreurTeamSize.setText("<html><font color=#FF0000>L'équipe doit avoir entre 1 et 5 combattants !</font></html>");
+								}
+							} catch (NumberFormatException e){
+								labelErreurTeamSize.setText("<html><font color=#FF0000>Veuillez entrer un chiffre entre 1 et 5.</font></html>");
+							}
+
+							try {
+	                    		horizontalBoardSize = Integer.parseInt(textHorizontalBoardSize.getText());
+								verticalBoardSize = Integer.parseInt(textVerticalBoardSize.getText());
+								if(j.validerTaillePlateau(horizontalBoardSize, verticalBoardSize)){
+									bonneTaillePlateau = true;
+									j.setnColonnes(horizontalBoardSize);
+									j.setnLignes(verticalBoardSize);
+									labelErreurBoardSize.setText("");
+								} else {
+									bonneTaillePlateau = false;
+									labelErreurBoardSize.setText("<html><font color=#FF0000>Le plateau doit faire au moins 5 cases de côté !</font></html>");
+								}
+							} catch (NumberFormatException e){
+								labelErreurBoardSize.setText("<html><font color=#FF0000>Veuillez entrer une taille de minimum 5 par 5, en chiffres.</font></html>");
+							}
+
+							try {
+	                    		zoneSize = Integer.parseInt(textZoneSize.getText());
+								if(j.validerTailleZoneDepart(zoneSize)){
+									bonneTailleZoneDepart = true;
+									j.setTailleZoneDepart(zoneSize);
+									labelErreurZoneSize.setText("");
+								} else {
+									bonneTailleZoneDepart = false;
+									labelErreurZoneSize.setText("<html><font color=#FF0000>La zone de départ ne doit pas être plus grande que la moitié du plateau !</font></html>");
+								}
+							} catch (NumberFormatException e){
+								labelErreurZoneSize.setText("<html><font color=#FF0000>Veuillez entrer une taille de zone en chiffres.</font></html>");
+							}
+
+	                        if(bonneTailleEquipe && bonneTaillePlateau && bonneTailleZoneDepart){
+								((MainFrame) theBar.getTopLevelAncestor()).setJeu(j);
+								theBar.setNouveauJeuClicable(false);
+
+								parametersDialog.dispose();
 	                        }
 	                    }
 	                });

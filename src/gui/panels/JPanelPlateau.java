@@ -48,6 +48,11 @@ public class JPanelPlateau extends JPanel {
         Jeu jeu = ((MainFrame)this.getTopLevelAncestor()).getJeu();
         int tailleH = 700 / jeu.getnColonnes();
         int tailleV = 550 / jeu.getnLignes();
+
+        this.setPreferredSize(new Dimension(tailleH * jeu.getnColonnes(), tailleV * jeu.getnLignes()));
+        ((MainFrame)this.getTopLevelAncestor()).pack();
+
+
         boolean color = true;
 
         String type;
@@ -87,7 +92,7 @@ public class JPanelPlateau extends JPanel {
                 color = !color;
 
                 p.setLocation(i, j);
-                if(casesDeplacement.contains(p)){
+                if(casesDeplacement.contains(p) && jeu.getAttaqueCourante() == null){
                     g.setColor(Color.BLUE);
                     g.drawRect(i * tailleH, j * tailleV, tailleH - 1, tailleV - 1);
                 }
@@ -117,6 +122,25 @@ public class JPanelPlateau extends JPanel {
         if(jeu.getPersoAttaquant() != null){
             g.setColor(Color.GREEN);
             g.drawRect(jeu.getPersoAttaquant().getPositionX() * tailleH, jeu.getPersoAttaquant().getPositionY() * tailleV, tailleH, tailleV);
+
+            if(jeu.getAttaqueCourante() != null){
+                int portee = jeu.getAttaqueCourante().getPortee();
+
+                g.setColor(Color.RED);
+                int x = Math.max((jeu.getPersoAttaquant().getPositionX() - portee), 0) * tailleH;
+                int y = jeu.getPersoAttaquant().getPositionY() * tailleV;
+                int width = Math.min((2 * portee) + 1, jeu.getnColonnes() - 1 - Math.max((jeu.getPersoAttaquant().getPositionX() - portee), 0)) * tailleH ;
+                int height = tailleV ;
+
+                g.drawRect(x, y, width, height);
+
+                x = jeu.getPersoAttaquant().getPositionX() * tailleH;
+                y = Math.max((jeu.getPersoAttaquant().getPositionY() - portee), 0) * tailleV;
+                width = tailleH;
+                height = Math.min((2 * portee) + 1, jeu.getnLignes() - 1 - Math.max((jeu.getPersoAttaquant().getPositionY() - portee), 0)) * tailleV ;
+
+                g.drawRect(x, y, width, height);
+            }
         }
 
         if(zoneCible != null){
@@ -124,6 +148,15 @@ public class JPanelPlateau extends JPanel {
             float alpha = 0.75f;
             g2d.setColor(new Color(1, 0, 0, alpha));
             g2d.fillRect(zoneCible.x, zoneCible.y, zoneCible.width, zoneCible.height);
+        }
+
+        if(jeu.getEtatCourant() == Jeu.Etat.PLACEMENT){
+            g.setColor(Color.RED);
+            if (jeu.getJoueurs().indexOf(jeu.getJoueurCourant()) == 0){
+                g.drawRect(0, 0, jeu.getTailleZoneDepart() * tailleH, jeu.getnLignes() * tailleV);
+            } else {
+                g.drawRect((jeu.getnColonnes() * tailleH) - (jeu.getTailleZoneDepart() * tailleH) - 1, 0, jeu.getTailleZoneDepart() * tailleH, jeu.getnLignes() * tailleV);
+            }
         }
     }
 }
