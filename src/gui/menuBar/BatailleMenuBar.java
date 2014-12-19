@@ -1,6 +1,8 @@
 package gui.menuBar;
 
+import gui.actionListeners.AProposActionListener;
 import gui.actionListeners.NouveauJeuActionListener;
+import gui.actionListeners.ReglesActionListener;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -30,7 +32,9 @@ public class BatailleMenuBar extends JMenuBar {
         boutonNouveauJeu = new JMenuItem("Nouveau Jeu");
 
         boutonSauvegarder = new JMenuItem("Sauvegarder la partie");
+        boutonSauvegarder.setEnabled(false);
         boutonCharger = new JMenuItem("Charger une partie");
+        boutonCharger.setEnabled(false);
 
         boutonQuit = new JMenuItem("Quitter");
 
@@ -64,6 +68,10 @@ public class BatailleMenuBar extends JMenuBar {
                 System.exit(0);
             }
         });
+
+        boutonAPropos.addActionListener(new AProposActionListener(this));
+
+        boutonRegles.addActionListener(new ReglesActionListener(this));
     }
 
     public void setNouveauJeuClicable(boolean clicable){
