@@ -14,9 +14,9 @@ public class Guerrier extends Personnage {
         this.terrestre = true;
         // Attaques
 //		public Attaque(String nom, int portee, int zone, boolean ralentissement, int effet, boolean celeste, boolean terrestre)
-        this.attaques.add(new Attaque("Coup de taille", 1, 1, false, 4, false, true, 1));
-        this.attaques.add(new Attaque("Baliste de feu", 4, 1, false, 6, false, true, 1));
-        this.attaques.add(new Attaque("Coup de jarnac", 4, 1, false, 1, false, true, 2));
+        this.attaques.add(new Attaque("Coup de taille", 1, 1, false, 4, false, true, 2));
+        this.attaques.add(new Attaque("Baliste de feu", 4, 1, false, 6, false, true, 2));
+        this.attaques.add(new Attaque("Coup de jarnac", 4, 1, false, 1, false, true, 1));
 	}
     
     public boolean verifDeplacementValide(int x, int y, Jeu j){

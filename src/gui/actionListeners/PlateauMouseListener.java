@@ -52,14 +52,13 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                                     }
                                 }
                             }
-                            jeu.getPersoAttaquant().setnAttaquesRestantes(jeu.getPersoAttaquant().getnAttaquesRestantes() - 1);
+                            jeu.getPersoAttaquant().setnAttaquesRestantes(jeu.getPersoAttaquant().getnAttaquesRestantes() - jeu.getAttaqueCourante().getnAttaques());
 
-                            if (jeu.getPersoAttaquant().getnAttaquesRestantes() == 0) {
-                                jeu.setAttaqueCourante(null);
-                                ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelAttaque().setText("");
-                            }
+                            jeu.setAttaqueCourante(null);
+                            ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().getLabelAttaque().setText("");
+                            ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().updateActions(jeu.getPersoAttaquant(), jeu);
 
-                            ((MainFrame) panelPlateau.getTopLevelAncestor()).getPanelStat().attaqueEnabled(false);
+
                             panelPlateau.setZoneCible(null);
                         }
                     }
@@ -70,7 +69,7 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                 }
 
                 if (jeu.getPersoAttaquant().getnAttaquesRestantes() == 0 && jeu.getPersoAttaquant().isDeplacementFait()) {
-                    jeu.getPersoAttaquant().setnAttaquesRestantes(-1);
+                    jeu.getPersoAttaquant().setnAttaquesRestantes(2);
                     jeu.getPersoAttaquant().setDeplacementFait(false);
                     jeu.setPersoAttaquant(null);
                     jeu.setAttaqueCourante(null);
@@ -82,7 +81,7 @@ public class PlateauMouseListener implements MouseListener, MouseMotionListener 
                     panelPlateau.setCasesDeplacement(new LinkedList<Point>());
                 }
 
-                if (jeu.getPersoAttaquant() != null && !jeu.getPersoAttaquant().isDeplacementFait() && jeu.getAttaqueCourante() == null) {
+                if (jeu.getPersoAttaquant() != null && !jeu.getPersoAttaquant().isDeplacementFait() && jeu.getPersoAttaquant().getnAttaquesRestantes() == 2 && jeu.getAttaqueCourante() == null) {
                     jeu.setPersoAttaquant(null);
                     Personnage temp = jeu.getPerso(caseX, caseY);
                     if (temp != null) {

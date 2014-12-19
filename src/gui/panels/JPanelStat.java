@@ -194,6 +194,10 @@ public class JPanelStat extends JPanel {
                 buttonAttaque = new JButton(perso.getAttaques().get(i).getNom());
                 buttonAttaque.addActionListener(new SelectAttaqueActionListener(perso.getAttaques().get(i), this));
 
+                if(jeu.getPersoAttaquant().getnAttaquesRestantes() < perso.getAttaques().get(i).getnAttaques()){
+                    buttonAttaque.setEnabled(false);
+                }
+
                 panelResumeActions.add(buttonAttaque);
             }
         }

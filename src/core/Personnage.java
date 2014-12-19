@@ -31,7 +31,7 @@ public abstract class Personnage {
 		this.protection = 0;
         this.attaques = new LinkedList<Attaque>();
 		this.deplacementFait = false;
-		this.nAttaquesRestantes = -1;
+		this.nAttaquesRestantes = 2;
 	}
 	
 	/**
