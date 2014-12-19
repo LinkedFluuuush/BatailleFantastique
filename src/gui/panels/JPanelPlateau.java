@@ -129,7 +129,7 @@ public class JPanelPlateau extends JPanel {
                 g.setColor(Color.RED);
                 int x = Math.max((jeu.getPersoAttaquant().getPositionX() - portee), 0);
                 int y = jeu.getPersoAttaquant().getPositionY();
-                int width = jeu.getPersoAttaquant().getPositionX() - x + Math.min(portee, jeu.getnColonnes() - jeu.getPersoAttaquant().getPositionX());
+                int width = jeu.getPersoAttaquant().getPositionX() - x + 1 + Math.min(portee, jeu.getnColonnes() - jeu.getPersoAttaquant().getPositionX());
                 int height = 1 ;
 
                 g.drawRect(x * tailleH, y * tailleV, width * tailleH, height * tailleV);
@@ -137,7 +137,7 @@ public class JPanelPlateau extends JPanel {
                 x = jeu.getPersoAttaquant().getPositionX();
                 y = Math.max((jeu.getPersoAttaquant().getPositionY() - portee), 0);
                 width = 1;
-                height = jeu.getPersoAttaquant().getPositionY() - y + Math.min(portee, jeu.getnLignes() - jeu.getPersoAttaquant().getPositionY());
+                height = jeu.getPersoAttaquant().getPositionY() - y + 1 + Math.min(portee, jeu.getnLignes() - jeu.getPersoAttaquant().getPositionY());
 
                 g.drawRect(x * tailleH, y * tailleV, width * tailleH, height * tailleV);
             }
